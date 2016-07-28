@@ -1,0 +1,109 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<form method="post" action="<?=$this->baseUrl();?>/accesorios/egresos">
+			<ul data-role="listview" data-inset="true" data-theme="e">
+				<li data-role="list-divider">Egresos</li>
+				<li><?=$this->form->suc_id->renderViewHelper();?></li>
+				<li><?=$this->form->pun_id->renderViewHelper();?></li>
+				<li data-role="fieldcontain">Desde: <input class="icon-calendar" type="text" name="desde" id="from" data-mini="true" value="<?=$this->desde;?>" size="8" /></li>
+				<li data-role="fieldcontain">Hasta:	<input type="text" id="to" name="hasta" value="<?=$this->hasta;?>" size="8" /></li>
+				<li><?=$this->form->ope->renderViewHelper();?></li>
+				<li><button data-theme="a" data-inline="true" data-mini="true" data-icon="search" title="Buscar" type="submit">Buscar</button></li>
+			</ul>
+		</form>
+		<?php if(sizeof($this->resultados) > 0): ?>
+			<center>
+				<a data-theme="e" data-role="button" data-inline="true" data-mini="true" data-icon="gear" href="javascript:;" class="imprimir">Imprimir</a> <a data-theme="e" data-role="button" data-mini="true" data-inline="true" data-icon="gear" href="javascript:;" class="exportar">Exportar</a>
+			</center>
+			<?php endif; ?>
+	</div>
+
+	<?php if(!is_null($this->resultados)): ?>
+
+		<div id="block-b" class="ui-block-b" data-theme="c">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">Egresos - <b><?=$this->periodo;?></b></li>
+				<li>
+					<?php if(sizeof($this->resultados) > 0): ?>
+						<table class="big">
+							<tr align="center" class="ui-bar-b">
+								<th rowspan="2">Punto</th>
+								<th colspan="2">Totales</th>
+							</tr>
+							<tr align="center" class="ui-bar-b">
+								<th>Cantidad</th>
+								<th>Monto</th>
+							</tr>
+							<?php foreach($this->puntosTotal as $i => $v): ?>
+								<tr class="ui-btn-up-c">
+									<td><?=$this->cache_puntos[$i];?></td>
+									<td align="right"><?=$v['cantidad'];?></td>
+									<td align="right"><?=$this->currency->toCurrency($v['precio']);?></td>
+								</tr>
+								<?php endforeach; ?>
+						</table>
+						<br />
+
+						<table class="big">
+							<tr align="center" class="ui-bar-b">
+								<th colspan="2">Totales</th>
+							</tr>
+							<tr align="center" class="ui-bar-b">
+								<th>Cantidad</th>
+								<th>Monto</th>
+							</tr>
+							<tr class="ui-btn-up-c">
+								<td align="right"><?=$this->total;?></td>
+								<td align="right"><?=$this->currency->toCurrency($this->precio);?></td>
+							</tr>
+						</table>
+						<br />
+
+						<table>
+							<thead>
+								<tr class="ui-bar-b" align="center">
+									<th width="140">Sucursal</th>
+									<?php if(!$this->pun_id){ ?><th>Punto de Venta</th><?php } ?>
+									<?php if($this->ope == 'Venta'){?><th>Vendedor</th><?php } ?>
+									<th>Cantidad</th>
+									<th>Total</th>
+									<th>Operaci&oacute;n</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->resultados as $i => $v){ ?>
+									<tr class="ui-btn-up-c">
+										<td><?=$this->cache_sucursales[$v['idsucursal']];?></td>
+										<?php if(!$this->pun_id){?><td><a target="_blank" href="<?=$this->baseUrl();?>/accesorios/egresos/punto/pun_id/<?=$v['idpunto'];?>/ope/<?=$this->ope;?>/desde/<?=$this->desdeUrl;?>/hasta/<?=$this->hastaUrl;?>"><?=$this->cache_puntos[$v['idpunto']];?></a></td><?php } ?>
+										<?php if($this->ope == 'Venta'){?><td><a target="_blank" data-legend="Detalle Vendedor" href="<?=$this->baseUrl();?>/accesorios/egresos/vendedor/ven_id/<?=$v['idvendedor'];?>/ope/<?=$this->ope;?>/desde/<?=$this->desdeUrl;?>/hasta/<?=$this->hastaUrl;?>"><?=$this->cache_vendedores[$v['idvendedor']];?></a></td><?php } ?>
+										<td align="right"><?=$v['cantidad'];?></td>
+										<td align="right"><?=$this->currency->toCurrency($v['precio']);?></td>
+										<td><?=$v['Operacion'];?></td>
+									</tr>
+									<?php } ?>
+							</tbody>
+						</table>
+						<div class="clear"></div>
+
+						<?php else: ?>
+						<p>Los resultados no pueden ser visualizados. No existen Ingresos para la fecha requerida.</p>
+						<?php endif; ?>
+				</li>
+			</ul>
+
+		</div>
+		<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+	$.get('<?=$this->baseUrl();?>/json/puntos-venta',function(d){
+		$puntos = d;
+		$('#suc_id').bind('change',function(){
+			var s = '<option value="">[Puntos de Venta]</option>';
+			$($puntos[+$(this).val()]).each(function(i,v){
+				s += '<option value="'+v.idpunto+'">'+v.nombre+'</option>';
+			});
+			$('#pun_id').html(s).val('<?=$this->pun_id;?>').change();
+		}).show().change();
+	},'json');
+</script>

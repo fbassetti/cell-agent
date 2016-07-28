@@ -1,0 +1,49 @@
+<fieldset class="fieldset">
+	<legend class="legend">Activaciones Importar</legend>
+
+	<?php if($this->mensaje): ?><div class="alerta"><?=$this->mensaje;?></div><br /><?php endif; ?>
+
+	<label class="label"><b>Introduzca las SIMS a Activar</b></label>
+	<form action="<?=$this->baseUrl();?>/activaciones/importacion/index/" method="post" id="form1">
+		<table border="0">
+			<thead>
+				<tr>
+					<td width="200"><b>Ejemplo</b><br />8954072100413938000<br />8954072100413938000</td>
+					<td>
+						<textarea name="texto" cols="50" rows="10"><?=$this->texto;?></textarea>
+						<br />
+						<button title="Buscar" class="button search" type="submit"></button>
+						</td>
+				</tr>
+				<tr>
+<?php if($this->cantidad): ?>
+			<td colspan="2" class="alerta">Cantidad de Activaciones a Importar: <b style="font-size:14px;"><?=$this->cantidad;?></b></td>
+				</tr>
+<?php if($this->cantidad > 0): ?>
+				<tr>
+					<td class="button-height">Localidad: <select name="localidad">
+						<option value="23-01">C&oacute;rdoba (351)</option>
+						<option value="37-01">Corrientes</option>
+						<option value="25-01">Gualeguaychu</option>
+						<option value="38-01">Posadas</option>
+						<option value="24-01">Rosario (341)</option>
+						<option value="27-01">Santa F&eacute; (342)</option>
+						<option value="24-09">San Lorenzo (3476)</option>
+						<option value="10-03">San Martin</option>
+						<option value="31-01">San Miguel Tuc.</option>
+					</select></td>
+					<td><button id="import" class="button" type="button">Importar &raquo;</button></td>
+				</tr>
+<?php endif; ?>
+<?php endif; ?>
+			</thead>
+		</table>
+	</form>
+
+<script type="text/javascript">
+$('#import').live('click',function(){
+	$('#form1').attr('action','<?=$this->baseUrl();?>/activaciones/importacion/index/importar/1').submit();
+});
+</script>
+
+</fieldset>

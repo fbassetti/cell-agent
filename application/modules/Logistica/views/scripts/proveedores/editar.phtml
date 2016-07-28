@@ -1,0 +1,73 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Opciones</li>
+			<li data-icon="add"><a href="<?=$this->baseUrl();?>/logistica/proveedores/alta">Nuevo Proveedor</a></li>
+			<li data-icon="home"><a href="<?=$this->baseUrl();?>/logistica/proveedores">Listado</a></li>
+			<li data-icon="back"><a data-icon="icon-back" class="button compact" href="<?=$this->baseUrl();?>/logistica/proveedores">Cancelar</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Informaci&oacute;n de Proveedor</li>
+			<li>
+				<form action="<?=$this->baseUrl();?>/logistica/proveedores/editar/prv_id/<?=$this->prv_id;?>" method="post">
+					<button data-theme="e" data-icon="mark" data-mini="true" data-inline="true" type="submit">Guardar</button>
+					<h3><u>Datos personales</u></h3>
+					<table>
+						<tr>
+							<td>Raz&oacute;n Social</td>
+							<td><?=$this->form->prv_rsocial->renderViewHelper();?></td>
+							<td colspan="2"><span class="alert">&nbsp;<?=reset($this->form->prv_rsocial->getMessages());?></span></td>
+						</tr>
+						<tr>
+							<td>Apellidos</td>
+							<td width="280"><?=$this->form->prv_apellido->renderViewHelper();?></td>
+							<td>Nombres</td>
+							<td><?=$this->form->prv_nombres->renderViewHelper();?></td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td><?=$this->form->prv_email->renderViewHelper();?></td>
+							<td colspan="2"><span class="alert">&nbsp;<?=reset($this->form->prv_email->getMessages());?></span></td>
+						</tr>
+						<tr>
+							<td>Tel. Fijo</td>
+							<td><?=$this->form->prv_telefono->renderViewHelper();?></td>
+							<td>Tel. M&oacute;vil</td>
+							<td><?=$this->form->prv_telefonoalt->renderViewHelper();?></td>
+						</tr>
+						<tr>
+							<td>Fax</td>
+							<td><?=$this->form->prv_fax->renderViewHelper();?></td>
+							<td>CUIT/CUIL</td>
+							<td><?=$this->form->prv_cuit->renderViewHelper();?></td>
+						</tr>
+					</table>
+
+					<h3><u>Domicilio</u></h3>
+					<table>
+						<tr>
+							<td>Calle</td>
+							<td><?=$this->form->dom_calle->renderViewHelper();?></td>
+							<td>N&uacute;mero/Extra</td>
+							<td><?=$this->form->dom_numero->renderViewHelper();?> <?=$this->form->dom_extra->renderViewHelper();?></td>
+						</tr>
+						<tr>
+							<td>Ciudad</td>
+							<td><?=$this->form->dom_ciudad->renderViewHelper();?></td>
+							<td>C&oacute;digo Postal</td>
+							<td><?=$this->form->dom_cp->renderViewHelper();?></td>
+						</tr>
+						<tr>
+							<td>Comentario</td>
+							<td colspan="3"><?=$this->form->comentario->renderViewHelper();?></td>
+						</tr>
+					</table>
+
+				</form>
+			</li>
+		</ul>
+	</div>
+</div>

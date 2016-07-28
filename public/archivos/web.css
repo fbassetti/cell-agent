@@ -1,0 +1,96 @@
+A.a:link {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A.a:visited {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A.a:hover {
+	FONT-WEIGHT: bold; COLOR: #339900; TEXT-DECORATION: underline
+}
+A.a:active {
+	FONT-WEIGHT: bold; COLOR: #990000; TEXT-DECORATION: underline
+}
+A.b:link {
+	COLOR: #0000cc; TEXT-DECORATION: none
+}
+A.b:visited {
+	COLOR: #0000cc; TEXT-DECORATION: none
+}
+A.b:hover {
+	COLOR: #0000cc; TEXT-DECORATION: underline
+}
+A.b:active {
+	COLOR: #cc0000; TEXT-DECORATION: underline
+}
+A.d:link {
+	COLOR: #333333; TEXT-DECORATION: underline
+}
+A.d:visited {
+	COLOR: #333333; TEXT-DECORATION: underline
+}
+A.d:hover {
+	FONT-WEIGHT: bold; COLOR: #333333; TEXT-DECORATION: underline
+}
+A.d:active {
+	COLOR: #0000ff; TEXT-DECORATION: underline
+}
+A.e:link {
+	COLOR: #0000ff; TEXT-DECORATION: underline
+}
+A.e:visited {
+	COLOR: #0000ff; TEXT-DECORATION: underline
+}
+A.e:hover {
+	COLOR: #0000ff; TEXT-DECORATION: underline
+}
+A.e:active {
+	COLOR: #0000ff; TEXT-DECORATION: underline
+}
+A.c:link {
+	COLOR: #333333; TEXT-DECORATION: none
+}
+A.c:visited {
+	COLOR: #333333; TEXT-DECORATION: none
+}
+A.c:hover {
+	COLOR: #339900; TEXT-DECORATION: underline
+}
+A.c:active {
+	COLOR: #006600; TEXT-DECORATION: underline
+}
+#navigationin A {
+	BACKGROUND: url(img/but.gif)
+}
+#navigationin A:hover {
+	BACKGROUND: url(img/but_over.gif)
+}
+.stylebanner {
+	BACKGROUND-COLOR: #e6e6ca
+}
+TD {
+	FONT-SIZE: 10px; COLOR: #333333; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.t22b {
+	FONT-WEIGHT: bold; FONT-SIZE: 22px
+}
+.t12 {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px
+}
+.t16 {
+	FONT-WEIGHT: bold; FONT-SIZE: 16px
+}
+.tdline {
+	BORDER-RIGHT: #e6e6ca 1px solid; BORDER-TOP: #e6e6ca 1px solid; BORDER-LEFT: #e6e6ca 1px solid; BORDER-BOTTOM: #e6e6ca 5px solid
+}
+.box_ip {
+	WIDTH: 35px
+}
+.box_text {
+	WIDTH: 150px
+}
+.box_longtext {
+	WIDTH: 200px
+}
+.warnmsg {
+	COLOR: #ff0000
+}

@@ -1,0 +1,87 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<!--<form method="post" action="<?=$this->baseUrl();?>/recargas/index/listado-por-vendedor">-->
+		<form method="post" action="<?=$this->baseUrl();?>/test">
+			<ul data-role="listview" data-inset="true" data-theme="e">
+				<li data-role="list-divider">Per&iacute;odo de activaci&oacute;n</li>
+				<li><input type="text" id="search" placeholder="Buscar Vendedor.." />
+				<?=$this->form->ven_id->renderViewHelper();?></li>
+				<li><?=$this->form->yy->renderViewHelper();?></li>
+				<li><?=$this->form->mm->renderViewHelper();?></li>
+				<li><?=$this->form->operatoria->renderViewHelper();?></li>
+				<li><button data-theme="a" data-inline="true" data-mini="true" data-icon="search" title="Buscar" type="submit">Buscar</button></li>
+			</ul>
+		</form>
+		<?php if(sizeof($this->resultados) > 0): ?>
+			<center>
+				<a data-theme="e" data-role="button" data-inline="true" data-mini="true" data-icon="gear" href="javascript:;" class="imprimir">Imprimir</a> <a data-theme="e" data-role="button" data-mini="true" data-inline="true" data-icon="gear" href="javascript:;" class="exportar">Exportar</a>
+			</center>
+			<?php endif; ?>
+	</div>
+
+	<?php if(!is_null($this->resultados)): ?>
+		<div id="block-b" class="ui-block-b" data-theme="c">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">Listado por Vendedor - <?=$this->cache_vendedores[$this->ven_id];?> - <b><?=$this->periodo;?></b> - <?=$this->cache_operatorias[$this->ope_id];?></li>
+				<li>
+					<?php if(sizeof($this->resultados) > 0): ?>
+						<table>
+							<thead>
+								<tr class="ui-bar-b" align="center">
+									<th>Vendedor</th>
+									<th>A&ntilde;o</th>
+									<th>Liquidaci&oacute;n</th>
+									<th>N&uacute;mero Recarga</th>
+									<th>Ventas</th>
+									<th>Promedio Base</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->resultados as $i => $v){ ?>
+									<tr class="ui-btn-up-c">
+										<td><?=$this->cache_vendedores[$v['Idvendedor']];?></td>
+										<td><?=$v['anio'];?></td>
+										<td><?=$v['liquidacion'];?></td>
+										<td align="right"><?=$v['recarga'];?></td>
+										<td align="right"><?=$v['total'];?></td>
+										<td align="right"><?=$this->currency->toCurrency($v['base']);?></td>
+									</tr>
+									<?php
+										$total += $v['total'];
+										$total1 += $v['base'];
+								} ?>
+								<tr class="ui-bar-c">
+									<td colspan="4" align="right"><b>Totales</b></td>
+									<td align="right"><b><?=$total;?></b></td>
+									<td align="right"><b><?=$this->currency->toCurrency($total1);?></b></td>
+								</tr>
+							</tbody>
+						</table>
+						<?php else : ?>
+						<p>No hay resultados relacionados.</p>
+						<?php endif; ?>
+				</li>
+			</ul>
+		</div>
+		<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+	$('#search').live('input keyup',function(e){
+		var s = $(this).val().toLowerCase().split(" ");
+		if(s == '') return;
+		var o = (e.keyCode == 13) ?  ':not(:selected)': '';
+		$.each(s, function(i,v){
+			$("#ven_id option"+o).filter(function(e){
+				return (new RegExp(v,'i').test($(this).text().toLowerCase()));
+			}).eq(0).attr('selected',true);
+		});
+	});
+function stopRKey(evt) {
+  var evt = (evt) ? evt : ((event) ? event : null);
+  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;}
+}
+
+document.onkeypress = stopRKey;
+</script>

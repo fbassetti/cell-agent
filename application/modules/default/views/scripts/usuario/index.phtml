@@ -1,0 +1,24 @@
+<div data-role="content" class="ui-grid" id="content">
+	<ul data-role="listview" data-inset="true" data-theme="c">
+		<li data-role="list-divider">Informaci&oacute;n de Usuario</li>
+		<li>
+			<table>
+				<tr>
+					<td>Usuario</td>
+					<td><b><?=$this->usuario['username'];?></b></td>
+				</tr>
+				<tr>
+					<td>Apellido y Nombre</td>
+					<td><b><?=$this->usuario['Apellido'];?>, <?=$this->usuario['nombre'];?></b></td>
+				</tr>
+				<!--		<tr>
+				<td>Último Acceso</td>
+				<td><b><?=$this->last_access;?>hs</b></td>
+				</tr>-->
+			</table>
+			<br />
+			<br />
+			<br />
+		</li>
+	</ul>
+</div>

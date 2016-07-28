@@ -1,0 +1,65 @@
+<?=$this->doctype().PHP_EOL;?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>RG Distribuciones</title>
+<meta charset="<?=$this->getEncoding();?>" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?=$this->headLink()
+	->prependStylesheet($this->baseUrl().'/public/mobile/jquery.mobile-1.1.1.min.css').PHP_EOL;?>
+
+<?=$this->headScript()
+	->prependFile($this->baseUrl().'/public/js/funciones.js')
+	->prependFile($this->baseUrl().'/public/mobile/jquery.mobile-1.1.1.min.js')
+	->prependFile($this->baseUrl().'/public/js/jquery-1.7.1.min.js').PHP_EOL;?>
+
+<script type="text/javascript">
+$(document).bind("mobileinit", function(){
+	$.mobile.ajaxEnabled = false;
+});
+</script>
+</head>
+<body>
+
+<div data-role="page" id="one">
+	<div data-role="header" data-position="inline">
+<?php if(!$this->nomenu):?><a href="#menu" data-icon="home">Menu</a><?php endif; ?>
+		<h1>Cell-Agent</h1>
+	</div>
+
+	<div data-role="content">
+		<?=$this->layout()->content;?>
+	</div>
+
+</div>
+
+<?php if(!$this->nomenu):?>
+<div data-role="page" id="menu">
+	<div data-role="header" data-position="fixed">
+		<a href="#one" data-icon="back">Volver</a>
+		<h1>Men&uacute; Agente</h1>
+	</div>
+	<div data-role="content">
+		<ul data-role="listview">
+<?php
+	$links = $this->navigation()->menu()->setMaxDepth(0)->getContainer();
+	foreach($links as $i => $v){
+		echo '<li><a href="'.$v->getHref().'">'.$v->getLabel().'</a>';
+		if($v->hasPages()){
+			echo "<ul>";
+			$pages = $v->getPages();
+			foreach($pages as $ii => $vv){
+				echo '<li><a href="'.$vv->getHref().'">'.$vv->getLabel().'</a></li>';
+			}
+			echo '<li data-theme="e" data-icon="back"><a href="#menu">Men&uacute; principal</a></li>';
+			echo "</ul>";
+		}
+		echo '</li>';
+	}
+?>
+		</ul>
+	</div>
+</div>
+<?php endif; ?>
+
+</body>
+</html>

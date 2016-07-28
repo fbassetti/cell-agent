@@ -1,0 +1,48 @@
+/* v1 */
+* { margin:0;padding:0; font-family: Arial;}
+body, html    { font-family: Arial;font-size: 12px; line-height:140%;}
+html    {  /*background-color:#0D5B8C;*/  background-color:#f9f9f9;}
+
+h1,h2,h3,h4,h5 { margin:0; padding:0; }
+a img     { border: 0;}
+ul    { list-style: none;}
+
+table    { border-collapse: collapse;}
+fieldset{ padding:5px; border:1px solid #ccc; position:relative;}
+
+a         { text-decoration: underline;color: blue;outline: none;}
+a:hover { text-decoration: underline; color:#0D5B8C;}
+input,textarea,select { border:1px solid #999; padding:3px 2px; background:#ddd; vertical-align:middle;}
+input:focus { outline:0 none; box-shadow:0 0 15px #A8C800;}
+
+#from,#to { text-align:center;}
+hr { height:0px; visibility:hidden; clear:both;}
+button {
+	background-image:url('../images/button.gif'); height:26px; padding:0 10px; line-height:26px; color:white;
+	font-weight: bold; border:0; cursor: pointer;white-space: nowrap;
+	-moz-border-radius: 4px; -webkit-border-radius: 4px;
+	-khtml-border-radius: 4px; border-radius: 4px;
+}
+.round { -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px;}
+button:hover { box-shadow:0 0 15px #A8C800;}
+.ui-datepicker-trigger {  padding:3px; margin-right:10px; height:23px; vertical-align:middle;}
+.ui-datepicker-trigger:hover { box-shadow:none;}
+
+#login {
+	margin-left:-140px; position:absolute; left:50%; top:20%;
+	width:240px; background:#333; color:white; padding:20px;  border:0;
+	-moz-border-bottom-left-radius: 20px; -webkit-border-bottom-left-radius: 20px;
+	-khtml-border-bottom-left-radius: 20px; border-bottom-left-radius: 30px;
+	-moz-border-top-right-radius: 20px; -webkit-border-top-right-radius: 20px;
+	-khtml-border-top-right-radius: 20px; border-top-right-radius: 30px;
+	box-shadow:6px 6px 10px #666;line-height:27px;
+}
+#login b { font-size: 14px; line-height:25px;}
+#login label { font-size: 12px; display:block; line-height:33px;}
+#login .user { background-image:url('../images/user.png');}
+#login .pass { background-image:url('../images/pass.png');}
+#login .user, #login .pass { padding-left:27px; background-repeat:no-repeat; background-position:left center;}
+#login input { width:160px; border:1px; }
+#login .alert { color:yellow; font-size:11px; white-space: nowrap;}
+
+tbody td { white-space: nowrap; padding:0 2px;}

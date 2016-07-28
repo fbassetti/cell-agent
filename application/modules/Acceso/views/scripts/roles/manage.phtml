@@ -1,0 +1,49 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Opciones</li>
+			<li data-icon="grid"><a href="<?=$this->baseUrl();?>/acceso/roles/index">Roles</a></li>
+			<li data-icon="gear"><a href="<?=$this->baseUrl();?>/acceso/recursos/assoc/rol_id/<?=$this->rol['rol_id'];?>">Administrar Recursos</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Administrar Rol - <b><?=$this->rol['rol_nombre'];?></b></li>
+			<li><b>Recursos Asignados</b>
+				<br />
+				<?php if(sizeof($this->resultados) > 0): ?>
+					<table>
+						<thead>
+							<tr class="ui-bar-d">
+								<th colspan="2">Modulo</th>
+							</tr>
+							<tr class="ui-bar-c">
+								<th>Controlador</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($this->resultados as $i => $r): ?>
+								<tr class="ui-btn-up-c">
+									<td colspan="2"><b><?=ucwords($i);?></b></td>
+								</tr>
+								<?php foreach($r as $ii => $v): ?>
+									<tr class="<?=$i;?>">
+										<td><?=$ii;?></td><td>
+											<?php foreach($v as $d): ?><?=$d;?><br /><?php endforeach; ?>
+										</td></tr>
+									<?php endforeach; ?>
+
+								<?php endforeach; ?>
+						</tbody>
+					</table>
+
+					<?php else: ?>
+					<p>No se encuentran Recursos Asociados.</p>
+					<?php endif; ?>
+
+			</li>
+		</ul>
+	</div>
+</div>

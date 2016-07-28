@@ -1,0 +1,26 @@
+<div data-role="content" class="ui-grid" id="content">
+	<ul data-role="listview" data-inset="true" data-theme="c">
+		<li data-role="list-divider">Sesiones Anteriores</li>
+		<li>
+
+			<table>
+				<thead>
+					<tr class="ui-bar-d">
+						<th>Navegador</th>
+						<th>Ip</th>
+						<th>Fecha</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach($this->sesiones as $idx => $v){ ?>
+						<tr class="ui-btn-up-c">
+							<td><?=$v['reg_browser'];?></td>
+							<td><?=$v['ip'];?></td>
+							<td><?=$v['fecha'];?></td>
+						</tr>
+						<?php } ?>
+				</tbody>
+			</table>
+		</li>
+	</ul>
+</div>

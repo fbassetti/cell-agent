@@ -1,0 +1,33 @@
+<?=$this->doctype().PHP_EOL;?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Panel de control</title>
+<meta charset="<?=$this->getEncoding();?>" />
+<?=$this->headLink()
+->prependStylesheet($this->baseUrl().'/public/mobile/v1.css')
+->prependStylesheet($this->baseUrl().'/public/mobile/test.css').PHP_EOL;?>
+<?=$this->headScript()
+->prependFile($this->baseUrl().'/public/js/funciones2.js')
+->prependFile($this->baseUrl().'/public/mobile/jquery.mobile-1.1.1.min.js')
+->prependFile($this->baseUrl().'/public/js/jquery-1.7.1.min.js').PHP_EOL;?>
+
+</head>
+<body>
+
+<div data-role="page" id="one">
+	<div id="nav" class="ui-bar-b">
+	<?=$this->navigation()->menu()->setMaxDepth(1);?>
+	</div>
+
+<?=$this->layout()->content;?>
+
+<?php if($this->nomenu): ?>
+	<div data-role="footer" data-position="fixed">
+		<h5>Agente oficial Telefonica Argentina S.A.</h5>
+	</div>
+<?php endif;?>
+
+</div>
+<div id="mask"></div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Opciones</li>
+			<li data-icon="add"><a href="<?=$this->baseUrl();?>/logistica/proveedores/alta">Nuevo Proveedor</a></li>
+			<li data-icon="home"><a href="<?=$this->baseUrl();?>/logistica/proveedores">Listado</a></li>
+			<li data-icon="grid"><a href="<?=$this->baseUrl();?>/logistica/proveedores/editar/prv_id/<?=$this->info['prv_id'];?>">Editar</a></li>
+			<li><p class="input"><span class="search"></span><input id="search" placeholder="Buscar" class="input-unstyled" type="text" /></p></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Informaci&oacute;n de Proveedor</li>
+			<li>
+				<h3><u>Datos personales</u></h3>
+				<table>
+					<tbody>
+						<tr>
+							<td>Raz&oacute;n Social</td>
+							<td colspan="3"><b><?=$this->info['prv_rsocial'];?></b></td>
+						</tr>
+						<tr>
+							<td>Apellidos</td>
+							<td width="280"><b><?=$this->info['prv_apellido'];?></b></td>
+							<td>Nombres</td>
+							<td><?=$this->info['prv_nombres'];?></td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td colspan="3"><b><?=$this->info['prv_email'];?></b></td>
+						</tr>
+						<tr>
+							<td>Tel&eacute;fono</td>
+							<td><?=$this->info['prv_telefono'];?></td>
+							<td>Tel&eacute;fono Alternativo</td>
+							<td><?=$this->info['prv_telefonoalt'];?></td>
+						</tr>
+						<tr>
+							<td>Fax</td>
+							<td><b><?=$this->info['prv_fax'];?></b></td>
+							<td>CUIT/CUIL</td>
+							<td><b><?=$this->info['prv_cuit'];?></b></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h3><u>Domicilio</u></h3>
+				<table>
+					<tbody>
+						<tr>
+							<td>Calle</td>
+							<td width="280"><b><?=$this->info['dom_calle'];?></b></td>
+							<td>N&uacute;mero/Extra</td>
+							<td><b><?=$this->info['dom_numero'];?> <?=$this->info['dom_extra'];?></b></td>
+						</tr>
+						<tr>
+							<td>Ciudad</td>
+							<td><b><?=$this->info['dom_ciudad'];?></b></td>
+							<td>C&oacute;digo Postal</td>
+							<td><b><?=$this->info['dom_cp'];?></b></td>
+						</tr>
+						<tr>
+							<td><b>Comentario</b></td>
+							<td colspan="3"><?=$this->info['comentario'];?></td>
+						</tr>
+					</tbody>
+				</table>
+			</li>
+		</ul>
+	</div>
+</div>

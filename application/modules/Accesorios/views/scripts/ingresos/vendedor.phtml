@@ -1,0 +1,54 @@
+<div data-role="content" class="ui-grid" id="content">
+	<ul data-role="listview" data-inset="true" data-theme="c">
+		<li data-role="list-divider">Ingresos por Vendedor- <b><?=$this->periodo;?></b></li>
+		<li><p><b>Vendedor</b> <?=$this->cache_vendedores[$this->ven_id];?>  <!--<a data-mini="true" data-role="button" data-icon="back" data-inline="true" href="<?=$this->baseUrl();?>/accesorios/ingresos/index/desde/<?=$this->desdeUrl;?>/hasta/<?=$this->hastaUrl;?>">Volver al listado</a>--> </p>
+
+			<?php if(is_null($this->resultados)){
+				} elseif(sizeof($this->resultados) > 0) { ?>
+				<table>
+					<thead>
+						<tr class="ui-bar-b" align="center">
+							<th>Sucursal</th>
+							<th>Punto de Venta</th>
+							<th>Fecha</th>
+							<th>Descripci&oacute;n</th>
+							<th>C&oacute;digo Barra</th>
+							<th>Cantidad</th>
+							<th>Costo Unitario</th>
+							<th>Total</th>
+							<th>Operaci&oacute;n</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($this->resultados as $i => $v){ ?>
+							<tr class="ui-btn-up-c">
+								<td><?=$this->cache_sucursales[$v['idsucursal']];?></td>
+								<td><?=$this->cache_puntos[$v['idpunto']];?></td>
+								<td><?=$v['dt_active'];?></td>
+								<td><?=$v['descripcion'];?></td>
+								<td><?=$v['codigobarra'];?></td>
+								<td align="right"><?=$v['cantidad'];?></td>
+								<td align="right"><?=$this->currency->toCurrency($v['precio_u']);?></td>
+								<td align="right"><?=$this->currency->toCurrency($v['precio_u']*$v['cantidad']);?></td>
+								<td align="right"><?=$v['Operacion'];?></td>
+							</tr>
+							<?php $total1 += $v['cantidad'];
+								$total2 += $v['precio_u'];
+								$total3 += $v['precio_u']*$v['cantidad'];
+						} ?>
+						<tr class="ui-bar-c">
+							<td colspan="5" align="right">Totales</td>
+							<td align="right"><?=$total1;?></td>
+							<td align="right"><?=$this->currency->toCurrency($total2);?></td>
+							<td align="right"><?=$this->currency->toCurrency($total3);?></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+				<?php } else { ?>
+				<p>No hay resultados relacionados.</p>
+				<?php } ?>
+		</li>
+	</ul>
+</div>
+	<a data-theme="e" data-role="button" data-inline="true" data-mini="true" data-icon="gear" href="javascript:;" class="imprimir">Imprimir</a> <a data-theme="e" data-role="button" data-mini="true" data-inline="true" data-icon="gear" href="javascript:;" class="exportar">Exportar</a>

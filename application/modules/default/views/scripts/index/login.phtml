@@ -1,0 +1,21 @@
+<fieldset class="fieldset" id="login">
+	<legend class="legend">Iniciar Sesi&oacute;n</legend>
+	<form method="post" action="<?=$this->redirect;?>">	
+		<label class="user"><?=$this->form->username->renderViewHelper();?></label>
+		<br>
+		<label class="pass"><?=$this->form->password->renderViewHelper();?></label>
+		<br>
+		
+		<?php if($this->form->username->hasErrors()): ?>
+			<div class="alert"><?=$this->form->username->renderErrors(); ?></div>
+		<?php endif; ?>
+
+		<button class="button" type="submit">Iniciar</button>
+	</form>
+	
+
+</fieldset>
+<script type="text/javascript">
+var l = $('#username').focus();
+
+</script>

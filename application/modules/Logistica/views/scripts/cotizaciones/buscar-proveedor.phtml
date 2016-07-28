@@ -1,0 +1,56 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="e">
+			<li data-role="list-divider">Opciones</li>
+			<li data-icon="back"><a href="<?=$this->baseUrl();?>/logistica/cotizaciones/ver/ped_id/<?=$this->ped_id;?>">Cancelar</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Proveedores</li>
+			<li>
+
+				<?php if(!empty($this->resultados)): ?>
+					<table>
+						<thead>
+							<tr class="ui-bar-b" align="center">
+								<th>Raz&oacute;n Social</th>
+								<th>Contacto<br />Email</th>
+								<th>Localidad</th>
+								<th>Tel. Fijo<br />Tel. M&oacute;vil</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($this->resultados as $i => $v){ ;?>
+								<tr class="ui-btn-up-c">
+									<td><a href="<?=$this->baseUrl();?>/logistica/proveedores/ver/prv_id/<?=$v['prv_id'];?>"><b><?=$v['prv_rsocial'];?></b></a></td>
+									<td><a href="<?=$this->baseUrl();?>/logistica/proveedores/ver/prv_id/<?=$v['prv_id'];?>"><b><?=$v['prv_apellido'];?>, <?=$v['prv_nombres'];?></b></a><br /><?=$v['prv_email'];?></td>
+									<td><?=$v['dom_ciudad'];?></td>
+									<td><?=$v['prv_telefono'];?><br /><?=$v['prv_telefonoalt'];?></td>
+									<td><a data-role="button" data-legend="A&ntilde;adir Cotizaci&oacute;n" data-icon="arrow-r" href="<?=$this->baseUrl();?>/logistica/cotizaciones/agregar/ped_id/<?=$this->ped_id;?>/prv_id/<?=$v['prv_id'];?>" data-iconpos="notext"></a></td>
+								</tr>
+								<?php } ?>
+						</tbody>
+					</table>
+					<?php else: ?>
+					<p>No hay Pedidos en el sistema.</p>
+					<?php endif; ?>
+
+			</li>
+		</ul>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('#search').live('input keyup',function(){
+		var s = $(this).val().toLowerCase().split(" ");
+		$("#proveedores tbody tr:hidden").show();
+		$.each(s, function(){$("#proveedores tr:visible .indexColumn:not(:contains('"+ this + "'))").parent().hide();});
+	});
+	$("#proveedores tbody tr:has(td)").each(function(){
+		var t = $(this).text().toLowerCase();
+		$("<td class='indexColumn'></td>").hide().text(t).appendTo(this);
+	});
+</script>

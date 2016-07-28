@@ -1,0 +1,158 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="c">
+			<!--<li data-role="list-divider">Opciones</li>-->
+			<li data-icon="home"><a href="<?=$this->baseUrl();?>/logistica/pedidos">Listado de Pedidos</a></li>
+			<li data-icon="back"><a href="<?=$this->baseUrl();?>/logistica/pedidos/ver/ped_id/<?=$this->ped_id;?>">Cancelar Edici&oacute;n</a></li>
+			<li data-icon="add" data-theme="a"><a onclick="productos()" href="javascript:;">Agregar Productos</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Editar Pedido</b></li>
+			<li><form action="/panel/pedidos/grabar/ped_id/<?=$this->ped_id;?>" method="post">
+					<button data-icon="icon-mark" class="button compact" type="submit">Grabar Cambios</button>
+					<br />
+					<br />
+					<fieldset class="fieldset">
+						<legend class="legend">Productos</legend>
+						<?php if(!empty($this->productos)): ?>
+							<div class="datagrid">
+								<table id="produ_list">
+									<thead>
+										<tr align="center">
+											<th width="80">Ref</th>
+											<th>Producto</th>
+											<th width="100">Cantidad</th>
+											<th width="90">Precio Unitario</th>
+											<th width="60">Precio Tot. Prod.</th>
+											<th width="60">Precio Final</th>
+											<th width="60">Opciones</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach($this->productos as $i => $v): ?>
+											<tr>
+												<td><?=$v['pro_articulo'];?> <input type="hidden" name="producto" /></td>
+												<td><?=$v['pro_nombre'];?></td>
+												<td align="right"><input name="cant[<?=$v['ppr_id'];?>]" type="number" min="1" max="20" value="<?=$v['cant'];?>" /></td>
+												<td width="100">$ <input name="precio[<?=$v['ppr_id'];?>]" size="10" type="text" value="<?=$v['ppr_precio'];?>" /></td>
+												<td width="100" align="right"><?=$this->currency->toCurrency($v['cant']*$v['ppr_precio']);?></td>
+												<td width="100" align="right"><?=$this->currency->toCurrency($v['cant']*$v['ppr_precio']*1.21);?></td>
+												<td align="center"><a data-legend="Eliminar" data-icon="icon-delete" class="button eliminar tiny" href="/panel/pedidos/borra-producto/ped_id/<?=$this->ped_id;?>/ppr_id/<?=$v['ppr_id'];?>"></a></td>
+											</tr>
+											<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
+							<?php else : ?><p>No hay productos asociados.</p>
+							<?php endif; ?>
+						<br />
+
+						<table align="right" class="pad" style="clear: both;width:450px;">
+							<tbody>
+								<tr>
+									<td align="right"><b>Sub-Total</b></td>
+									<td align="right" width="110"><?=$this->currency->toCurrency($this->subtotal);?></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td align="right"><b>Gastos de Envio</b></td>
+									<td align="right"><?=$this->form->ped_envio->renderViewHelper();?></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td align="right"><b>IVA</b></td>
+									<td align="right"><?=$this->currency->toCurrency($this->subiva);?></td>
+									<td><?=$this->form->iva->renderViewHelper();?></td>
+								</tr>
+								<tr>
+									<td align="right"><b>Descuento</b></td>
+									<td align="right"><?=$this->form->descuento->renderViewHelper();?></td>
+									<td>ARS</td>
+								</tr>
+								<tr>
+									<td align="right"><b>TOTAL</b></td>
+									<td align="right"><?=$this->currency->toCurrency($this->total);?></td>
+									<td>ARS</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</fieldset>
+
+					<!-- Comentarios -->
+					<b>Comentarios a transmitirle al Cliente</b><br />
+					<?=$this->form->comentarios->renderViewHelper();?>
+				</form>
+
+				<div id="modal">
+					<!-- Buscar Productos -->
+					<fieldset class="fieldset" id="prosearch">
+						<legend class="legend">Buscar Productos</legend>
+
+						<button data-icon="icon-delete" type="button" class="button compact" style="float: right;" onclick="$('#modal').hide();"></button>
+						<p class="input"><input class="input-unstyled" name="q" type="text" value="" /></p>
+						<button data-icon="icon-add" type="button" class="button compact" id="agregarprod">Agregar Seleccionados</button>
+
+						<form action="<?=$this->baseUrl();?>/logistica/pedidos/agrega-producto/ped_id/<?=$this->ped_id;?>" method="post" id="addtopresu">
+							<div style="height:250px;overflow: auto;width:500px;">
+								<div class="datagrid">
+									<table id="prores">
+										<thead>
+											<tr>
+												<th></th>
+												<th width="80">Ref</th>
+												<th>Producto</th>
+											</tr>
+										</thead>
+										<tbody><tr><td>Cargando..</td></tr></tbody>
+									</table>
+								</div>
+							</div>
+						</form>
+
+					</fieldset>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$productos =null;
+	function productos(){
+		//$('#modal').show();
+		$('#prosearch').find('input[name=q]').focus();
+		if($productos == null){
+			$.post('<?=$this->baseUrl();?>/json/accesorios',function(d){
+				$productos = d.data;
+				$('#prores tbody').html('');
+				for(i in $productos){
+					$('#prores tbody').append('<tr class="pror"><td><input class="abox" name="producto[]" value="'+$productos[i].CodigoBarra+'" type="checkbox" /></td><td>'+$productos[i].CodigoBarra+'</td><td>'+$productos[i].Articulo+'</td></tr>');
+				}
+				$("#prores tr:has(td)").each(function(){
+					var t = $(this).text().toLowerCase();
+					$("<td class='indexColumn'></td>").hide().text(t).appendTo(this);
+				});
+
+				$('#prosearch input[name=q]').live('input keyup',function(){
+					var s = $(this).val().toLowerCase().split(" ");
+					$("#prores tr:hidden").show();
+					$.each(s, function(){
+						$("#prores tr:visible .indexColumn:not(:contains('"+ this + "'))").parent().hide();
+					});
+					$("#prores tr:has(.abox:checked)").show();
+				});
+			},'json');
+		}
+	}
+	//$('#modal').appendTo('body');
+
+	$('#agregarprod').click(function(){
+		if($('#prores').find('input:checked').length == 0){ return alert('No hay productos seleccionados');}
+		$('#addtopresu').submit();
+	});
+</script>

@@ -1,0 +1,42 @@
+<?=$this->doctype().PHP_EOL;?>
+<html>
+<head>
+<title>Panel de control</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?=$this->headLink()
+->prependStylesheet($this->baseUrl().'/public/css/phone.css')
+->prependStylesheet($this->baseUrl().'/public/css/reset.css').PHP_EOL;?>
+
+<?php if(!$this->nomenu) { ?>
+	<?=$this->headScript()
+	->prependFile($this->baseUrl().'/public/js/jquery-1.7.1.min.js');?>
+	<?php } ?>
+</head>
+<body>
+<div>
+<?php if(!$this->nomenu) { ?>
+		<ul data-role="listview">
+			<li><h3>Desplegar Menu</h3><ul>
+<?php
+						$links = $this->navigation()->menu()->setMaxDepth(0)->getContainer();
+						foreach($links as $i => $v){
+							echo '<li><h3>'.$v->getLabel().'</h3>';
+							if($v->hasPages()){
+								echo "<ul>";
+								$pages = $v->getPages();
+								foreach($pages as $ii => $vv){
+									echo '<li><a href="'.$vv->getHref().'">'.$vv->getLabel().'</a></li>';
+								}
+								echo "</ul>";
+							}
+							echo '</li>';
+						}
+				?></ul></li>
+		</ul>
+		<?php } ?>
+	<div>
+		<?=$this->layout()->content;?>
+	</div>
+</div>
+</body>
+</html>

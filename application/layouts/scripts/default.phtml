@@ -1,0 +1,33 @@
+<?=$this->doctype().PHP_EOL;?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Panel de control</title>
+<meta charset="<?=$this->getEncoding();?>" />
+<?php if($this->mobile): ?><meta name="viewport" content="width=device-width, initial-scale=1"><?php endif;?>
+
+<?=$this->headLink()
+	->prependStylesheet($this->baseUrl().'/public/css/v1.css')
+	->prependStylesheet($this->baseUrl().'/public/css/form.css')
+	->prependStylesheet($this->baseUrl().'/public/css/style.css')
+	->prependStylesheet($this->baseUrl().'/public/css/reset.css').PHP_EOL;?>
+<?=$this->headScript()
+	->prependFile($this->baseUrl().'/public/js/funciones.js')
+	->prependFile($this->baseUrl().'/public/js/jquery-1.7.1.min.js').PHP_EOL;?>
+</head>
+<body>
+<?php if(!$this->nomenu){ ?>
+<?=$this->navigation()->menu()->setMaxDepth(1);?>
+<div class="breadcrumbs"><?=$this->navigation()->breadcrumbs()->setMinDepth(0)->setSeparator(' &raquo; ');?></div>
+<?php } ?>
+	<div class="container">
+<?=$this->layout()->content;?>
+	</div>
+<div id="pie">
+    <table width="100%">
+	<tr>
+		<td align="center" class="pieleft">Agente oficial Telefonica Argentina S.A.</td>
+	</tr>
+    </table>
+ </div>
+</body>
+</html>

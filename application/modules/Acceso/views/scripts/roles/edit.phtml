@@ -1,0 +1,24 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Opciones</li>
+			<li data-icon="home"><a href="<?=$this->baseUrl();?>/acceso/roles/index">Roles</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Editar Rol</li>
+			<li>
+				<form method="post" action="<?=$this->baseUrl();?>/acceso/roles/edit/rol_id/<?=$this->rol_id;?>">
+					<label class="label">Nombre Rol</label>
+					<?=$this->form->rol_nombre->renderViewHelper();?>
+					<br />
+					<button data-theme="a" data-mini="true" type="submit" data-inline="true" data-icon="mark">Guardar</button>
+					<a data-mini="true" data-role="button" data-inline="true" data-mini="true" href="<?=$this->baseUrl();?>/acceso/roles/index" data-icon="back">Cancelar</a>
+				</form>
+
+			</li>
+		</ul>
+	</div>
+</div>

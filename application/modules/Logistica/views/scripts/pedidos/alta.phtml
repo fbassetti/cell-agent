@@ -1,0 +1,72 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="e">
+			<li data-icon="back"><a href="<?=$this->baseUrl();?>/logistica/pedidos">Listado de Pedidos</a></li>
+			<li data-icon="none"><a><b>Articulos</b></a></li>
+			<li><div>
+					<ul><?php foreach($this->cache_grupos as $i => $v):?>
+							<li><a data-role="none" href="<?=$this->baseUrl();?>/logistica/pedidos/accesorios/id/<?=$i;?>"><?=$v;?></a></li>
+						<?php endforeach; ?></ul>
+				</div>
+			</li>
+			<li data-icon="none"><a><b>Equipos</b></a></li>
+			<li><div>
+					<ul><?php foreach($this->cache_marcas as $i => $v):?>
+							<li><a data-role="none" href="<?=$this->baseUrl();?>/logistica/pedidos/equipos/id/<?=$i;?>"><?=$v;?></a></li>
+						<?php endforeach; ?></ul>
+				</div>
+			</li>
+
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Alta de Pedido - Productos (<?=sizeof($this->productos);?>)</b></li>
+			<li>
+				<?php if(!empty($this->productos)): ?>
+					<form action="<?=$this->baseUrl();?>/logistica/pedidos/guardar" method="post">
+					<table>
+						<thead>
+							<tr class="ui-bar-d" align="center">
+								<th></th>
+								<th width="80">Ref</th>
+								<th>Producto</th>
+								<th width="50">Cantidad</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($this->productos as $i => $v): ?>
+								<tr class="ui-btn-up-c">
+									<?php if($v['pro_tipo'] == 'A'): ?>
+										<td>Art&iacute;culo</td>
+										<td align="right"><?=$v['pro_id'];?></td>
+										<td><?=$v['articulo'];?></td>
+									<?php else: ?>
+										<td>Equipo</td>
+										<td align="right"><?=$this->cache_marcas[$v['idmarca']];?></td>
+										<td><?=$v['articulo'];?></td>
+									<?php endif; ?>
+									<td align="center"><?=$v['cant'];?></td>
+									<td align="center"><input data-role="none" name="cant[<?=$v['vir_id'];?>]" style="text-align:center;width:40px;" min="1" type="number" value="<?=$v['cant'];?>" /></td>
+									<td align="center"><a data-legend="eliminar" data-role="button" data-iconpos="notext" href="<?=$this->baseUrl();?>/logistica/pedidos/borra-producto/ppr_id/<?=$v['vir_id'];?>" data-icon="delete"></a></td>
+								</tr>
+								<?php endforeach; ?>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td><a data-role="button" data-theme="b" data-inline="true" data-icon="forward" data-mini="true" href="<?=$this->baseUrl();?>/logistica/pedidos/procesar">Procesar</a></td>
+								<td colspan="5" align="right"><button data-theme="e" data-inline="true" data-icon="forward" data-mini="true" type="submit">Guardar</button></td>
+							</tr>
+						</tfoot>
+					</table>
+					</form>
+					<?php else: ?>
+					<p>No se han a&ntilde;adido productos.</p>
+					<?php endif; ?>
+			</li>
+		</ul>
+	</div>
+</div>

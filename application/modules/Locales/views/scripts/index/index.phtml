@@ -1,0 +1,17 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="e">
+			<li data-role="list-divider">Locales</li>
+			<li><?=sizeof($this->locales);?> encontrados</li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<?php foreach($this->locales as $i => $v): ?>
+				<li><a title="<?=$v['loc_nombre'];?>" href="<?=$this->baseUrl();?>/locales/index/camara/loc_id/<?=$v['loc_id'];?>"><?=$v['loc_nombre'];?></a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+</div>

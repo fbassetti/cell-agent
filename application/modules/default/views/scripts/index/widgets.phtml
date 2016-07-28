@@ -1,0 +1,14 @@
+<fieldset>
+	<legend>Lista de Widgets</legend>
+	<?php foreach($this->widgets as $i => $v): ?>
+	<li>
+	<b><?=$v['wid_nombre'];?></b> <input class="widg" <?=(in_array($v['wid_id'],$this->activos)) ? 'checked="checked"': '';?> value="<?=$v['wid_id'];?>" align="absmiddle" type="checkbox" />
+	</li>
+	<?php endforeach; ?>
+</fieldset>
+<script type="text/javascript">
+$('.widg').live('click',function(){
+	var url = ($(this).is(':checked')) ? 'add' : 'remove';
+	$.get('<?=$this->baseUrl();?>/widget/'+url+'/wid/'+this.value);
+});
+</script>

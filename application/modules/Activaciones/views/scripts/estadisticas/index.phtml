@@ -1,0 +1,45 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<!--		<ul data-role="listview" data-inset="true" data-theme="e">
+		<li></li>
+		</ul>-->
+
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Activaciones Robot, Ultimos 20 dias</li>
+			<li>
+				<div id="chart_repro"></div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load('visualization', '1.0', {'packages':['corechart']});
+	/* Por activar */
+	google.setOnLoadCallback(drawRepros);
+	function drawRepros(){
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Cantidad');
+		data.addColumn('number', 'Pendientes');
+		data.addRows([
+		<?=$this->repros;?>
+		]);
+		var options = {'title':'Activaciones Pendientes',
+			'width':600,
+			'height':350};
+
+		repro = new google.visualization.ColumnChart(document.getElementById('chart_repro'));
+		repro.draw(data, options);
+
+		google.visualization.events.addListener(repro, 'onmouseover', barMOver);
+		google.visualization.events.addListener(repro, 'onmouseout', barMOut);
+	}
+
+	function barMOver(e){repro.setSelection([e]);}
+	function barMOut(e){repro.setSelection([{'row': null, 'column': null}]);}
+
+</script>

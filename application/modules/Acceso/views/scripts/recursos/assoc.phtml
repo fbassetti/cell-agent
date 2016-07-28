@@ -1,0 +1,96 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Opciones</li>
+			<li data-icon="grid"><a href="<?=$this->baseUrl();?>/acceso/roles">Roles</a></li>
+			<li data-icon="back"><a href="<?=$this->baseUrl();?>/acceso/roles/manage/rol_id/<?=$this->rol['rol_id'];?>">Volver</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Asignar Recursos a <b><?=$this->rol['rol_nombre'];?></b></li>
+			<li>
+				<?php if(!empty($this->resultados)): ?>
+					<div style="float:left;margin-right:20px;">
+						<form action="<?=$this->baseUrl();?>/acceso/recursos/remover/rol_id/<?=$this->rol['rol_id'];?>" method="post">
+							<table>
+								<thead>
+									<tr class="ui-bar-d">
+										<th>Modulo</th>
+										<th><button data-role="none" type="submit">Remover</button></th>
+									</tr>
+									<tr class="ui-bar-c">
+										<th>Controlador</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach($this->resultados as $i => $r): ?>
+										<tr class="ui-btn-up-c">
+											<td colspan="2"><label><input data-role="none" name="modulo[]" type="checkbox" value="<?=strtolower($i);?>" /> <b><?=ucwords($i);?></b></label></td>
+										</tr>
+										<?php foreach($r as $ii => $v): ?>
+											<tr class="<?=$i;?>">
+												<td><label><input data-role="none" class="hereda2" type="checkbox" name="controlador[<?=strtolower($i);?>][]" value="<?=$ii;?>" /> <?=$ii;?></label></td><td>
+													<?php foreach($v as $d): ?>
+														<label><input data-role="none" name="accion[<?=strtolower($i);?>][<?=$ii;?>][]" value="<?=$d;?>" type="checkbox" /> <?=$d;?></label><br />
+														<?php endforeach; ?>
+												</td></tr>
+											<?php endforeach; ?>
+
+										<?php endforeach; ?>
+								</tbody>
+							</table>
+						</form>
+					</div>
+					<?php else: ?>
+					<p>No se encuentran Recursos Asociados.</p>
+					<?php endif; ?>
+
+				<div style="float:left;">
+					<form action="<?=$this->baseUrl();?>/acceso/recursos/agregar/rol_id/<?=$this->rol['rol_id'];?>" method="post">
+						<table>
+							<thead>
+								<tr class="ui-bar-d">
+									<th>Modulo</th>
+									<th><button data-role="none" type="submit" data-icon="icon-add">Agregar</button></th>
+								</tr>
+								<tr class="ui-bar-c">
+									<th>Controlador</th>
+									<th>Acciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->recursos as $i => $r): ?>
+									<tr class="ui-btn-up-c">
+										<td colspan="2"><label><input data-role="none" name="modulo[]" type="checkbox" value="<?=strtolower($i);?>" /> <b><?=$i;?></b></label></td>
+									</tr>
+									<?php foreach($r as $ii => $v): ?>
+										<tr class="<?=$i;?>">
+											<td valign="top"><label><input data-role="none" class="hereda2" type="checkbox" name="controlador[<?=strtolower($i);?>][]" value="<?=$ii;?>" /> <?=$ii;?></label></td><td>
+												<?php foreach($v as $d): ?>
+													<label><input data-role="none" name="accion[<?=strtolower($i);?>][<?=$ii;?>][]" value="<?=$d;?>" type="checkbox" /> <?=$d;?></label><br />
+													<?php endforeach; ?>
+											</td></tr>
+										<?php endforeach; ?>
+
+									<?php endforeach; ?>
+							</tbody>
+						</table>
+					</form>
+
+				</div>
+				<div class="clear"></div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$('.hereda2').live('click',function(){
+		$(this).parents('td').next().find('input').attr('disabled',$(this).is(':checked'));
+	});
+
+</script>

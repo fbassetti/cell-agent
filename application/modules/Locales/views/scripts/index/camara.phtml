@@ -1,0 +1,33 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-theme="a"><a href="<?=$this->baseUrl();?>/locales/index" data-icon="back">Listado</a></li>
+			<li data-role="list-divider">Opciones</li>
+			<li><a id="record" onclick="record(this);" href="javascript:;"></a></li>
+			<li><a id="snapshot" onclick="snap(this);" href="javascript:;"></a></li>
+			<li><a id="browse" onclick="browse(this);" href="javascript:;"></a></li>
+			<li><a id="talk" onclick="talk(this);" href="javascript:;"></a></li>
+			<li><a id="listen" onclick="listen(this);" href="javascript:;"></a></li>
+			<!--<li><a id="alarm" onclick="alarmtrig(this);" href="javascript:;">Escuchar</a></li>-->
+			<li data-role="list-divider">Cambiar Escala</li>
+			<li><a id="scale1" data-role="button" href="javascript:;" onclick="scale(1.0);">1x</a></li>
+			<li><a id="scale2" data-role="button" href="javascript:;" onclick="scale(2.0);">2x</a></li>
+			<li><a id="scale3" data-role="button" href="javascript:;" onclick="scale(3.0);">3x</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider"><b><?=$this->local['loc_nombre'];?></b> - Fecha: <?=date('d/m/Y')?></li>
+			<li>
+				<input type="hidden" id="local" name="local" value="<?=$this->local['loc_id'];?>" />
+
+				<object id="ucx" title="activex streaming client" codebase="<?=$this->baseUrl();?>/public/archivos/ultracamx.cab#version=1,0,31,0" height="480" width="640" align="middle" classid="clsid:8ed1093f-319e-48ec-a9f2-971236f0cc21" />
+
+				<!--	<form name="formalarm" action="trigger.cgi" method="post"><input type="hidden" value="-1" name="alarm"></form>-->
+				<!--	<form name="formnight" action="trigger.cgi" method="post"><input type="hidden" value="-1" name="night"></form>-->
+				<iframe name="hid" src="<?=$this->baseUrl();?>/public/archivos/hidden.htm" frameborder="0" width="0" height="0"></iframe>
+			</li>
+		</ul>
+	</div>
+</div>

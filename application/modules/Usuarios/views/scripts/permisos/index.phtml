@@ -1,0 +1,33 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="e">
+			<li data-role="list-divider">Buscar Usuario</li>
+			<li><form action="<?=$this->baseUrl();?>/usuarios/index" method="post">
+					<?=$this->fbuscar->q->renderViewHelper();?><button data-inline="true" data-mini="true" title="Buscar" data-icon="search" data-iconpos="notext" type="submit"></button><br />
+				</form></li>
+			<li data-role="list-divider" data-icon="search">Permisos</li>
+			<li>Usuario: <b><?=$this->usuario;?></b></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+		<li data-role="list-divider">Recursos Disponibles</li>
+		<li><form action="<?=$this->baseUrl();?>/usuarios/permisos/guardar/usu_id/<?=$this->usu_id;?>" method="post">
+			<p><label class="label" data-inline="true"><input onclick="$('.permisos :input').attr('checked',$(this).is(':checked')).checkboxradio('refresh')" type="checkbox" /> <b>Todos/Ninguno</b></label></p>
+			<table class="permisos">
+				<thead>
+					<tr>
+						<?php foreach($this->recursos as $i => $a): ?><td style="border: 0;width:120px;">
+							<?php foreach($a as $j => $v): ?><p><?=$v;?></p><?php endforeach; ?></td>
+							<?php endforeach; ?>
+					</tr>
+				</thead>
+			</table>
+			<button data-theme="a" data-inline="true" data-mini="true" data-icon="save" type="submit">Guardar</button>
+			<a data-role="button" data-inline="true" data-icon="back" href="<?=$this->baseUrl();?>/usuarios/index">Volver</a>
+		</form>
+		</li>
+	</div>
+</div>
+

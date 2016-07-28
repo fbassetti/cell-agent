@@ -1,0 +1,39 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="e">
+			<li data-role="list-divider">Buscar Usuario</li>
+			<li><form action="<?=$this->baseUrl();?>/logistica/niveles/buscar" method="post">
+					<?=$this->fbuscar->q->renderViewHelper();?> <button data-inline="true" data-mini="true" title="Buscar" data-icon="search" data-iconpos="notext" type="submit"></button><br />
+					<?php if($this->fbuscar->q->getValue() != ''): ?><a data-theme="e" data-role="button" data-icon="delete" data-inline="true" data-mini="true" href="<?=$this->baseUrl();?>/logistica/niveles/buscar">Limpiar Busqueda</a><?php endif;?>
+				</form></li>
+			<li><b><?=$this->total;?></b> registros en total</li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Niveles de Autorizaci&oacute;n</li>
+			<li><?php if(!empty($this->niveles)): ?>
+					<table>
+						<thead>
+							<tr class="ui-bar-d">
+								<th width="250">Usuario</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+					<?php foreach($this->niveles as $i => $v): ?>
+							<tr class="ui-btn-up-c">
+								<td><?=$v['Apellido'];?>, <?=$v['nombre'];?> [<?=$v['username'];?>]</td>
+								<td>[x]</td>
+							</tr>
+					<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php else: ?>
+					<p>No existen Usuarios asignados a Niveles de Autorizaci&oacute;n</p>
+					<?php endif; ?>
+			</li>
+		</ul>
+	</div>
+</div>

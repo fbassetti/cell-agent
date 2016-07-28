@@ -1,0 +1,42 @@
+<fieldset class="fieldset">
+	<legend class="legend">Comisi&oacute;n por Punto Mensual</legend>
+
+	<p></p>
+	<table>
+		<thead>
+			<tr>
+				<th rowspan="2">Operatoria</th>
+<?php foreach($this->indices as $v):?>
+				<th colspan="2"><?=$v;?></th>
+<?php endforeach; ?>
+			</tr>
+			<tr>
+<?php for($l=0;$l<sizeof($this->resultados);$l++): ?>
+				<th>Ventas</th>
+				<th>Puntuaci&oacute;n</th>
+<?php endfor; ?>
+			</tr>
+		</thead>
+		<tbody>
+<?php foreach($this->cache_operatorias as $a => $b): ?>
+				<tr>
+					<td><?=$b;?></td>
+<?php foreach($this->resultados as $d => $v):?>
+					<td align="right"><?=$v[$a]['ventas'];?></td><?php $total{$d} += $v[$a]['ventas'];?>
+					<td align="right"><?=$v[$a]['puntuacion'];?></td><?php $total2{$d} += $v[$a]['puntuacion'];?>
+<?php endforeach; ?>
+				</tr>
+<?php endforeach; ?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td align="right"><b>Total</b></td>
+<?php foreach($this->indices as $v):?>
+				<td align="right"><?=$total{$v};?></td>
+				<td align="right"><?=$total2{$v};?></td>
+<?php endforeach; ?>
+			</tr>
+		</tfoot>
+	</table>
+
+</fieldset>

@@ -1,0 +1,40 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="e">
+			<li><p>*Lotes Disponibles desde Abril de 2012</p></li>
+		</ul>
+
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Lotes Disponibles</li>
+			<li><table>
+					<thead>
+						<tr class="ui-bar-b" align="center">
+							<th>Lote SIM</th>
+							<th>Finalizado</th>
+							<th>Pendiente</th>
+							<th>Localidad</th>
+							<th>Entregado</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($this->lotes as $i => $v): ?>
+							<tr class="ui-btn-up-c">
+								<td><a href="<?=$this->baseUrl();?>/activaciones/index/ver-lote/lote/<?=$v['lote'];?>"><b><?=$v['lote'];?></b>XXX</a></td>
+								<td align="right"><?=$v['Finalizado'];?></td>
+								<td align="right"><?=$v['Pendiente'];?></td>
+								<td><?=$v['activacion_locLin'];?> (<?=$this->cache_localidades[$v['activacion_locLin']];?>)</td>
+								<td><b><?=$v['activacion_abonado'];?></b></td>
+							</tr>
+							<?php endforeach; ?>
+					</tbody>
+				</table>
+
+			</li>
+
+
+		</ul>
+	</div>
+</div>

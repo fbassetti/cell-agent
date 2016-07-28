@@ -1,0 +1,84 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<form method="post" action="<?=$this->baseUrl();?>/recargas/index/listado-por-sucursal">
+			<ul data-role="listview" data-inset="true" data-theme="e">
+				<li data-role="list-divider">Per&iacute;odo de activaci&oacute;n</li>
+				<li><?=$this->form->suc_id->renderViewHelper();?></li>
+				<li><?=$this->form->yy->renderViewHelper();?></li>
+				<li><?=$this->form->mm->renderViewHelper();?></li>
+				<li><?=$this->form->operatoria->renderViewHelper();?></li>
+				<li><button data-theme="a" data-inline="true" data-mini="true" data-icon="search" title="Buscar" type="submit">Buscar</button></li>
+			</ul>
+		</form>
+		<?php if(sizeof($this->resultados) > 0): ?>
+			<center>
+				<a data-theme="e" data-role="button" data-inline="true" data-mini="true" data-icon="gear" href="javascript:;" class="imprimir">Imprimir</a> <a data-theme="e" data-role="button" data-mini="true" data-inline="true" data-icon="gear" href="javascript:;" class="exportar">Exportar</a>
+			</center>
+			<?php endif; ?>
+	</div>
+
+	<?php if(!is_null($this->resultados)): ?>
+		<div id="block-b" class="ui-block-b" data-theme="c">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">Listado por Sucursal - <?=$this->cache_sucursales[$this->suc_id];?> - <b><?=$this->periodo;?></b> - <?=$this->cache_operatorias[$this->ope_id];?></li>
+				<li>
+					<?php if(sizeof($this->resultados) > 0): ?>
+						<table>
+							<thead>
+								<tr class="ui-bar-b" align="center">
+									<th>Sucursal</th>
+									<th>A&ntilde;o</th>
+									<th>Liquidaci&oacute;n</th>
+									<th>N&uacute;mero Recarga</th>
+									<th>Ventas</th>
+									<th>Promedio Base</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->resultados as $i => $v){ ?>
+									<tr class="ui-btn-up-c">
+										<td><?=$this->cache_sucursales[$v['IdSucursal']];?></td>
+										<td><?=$v['anio'];?></td>
+										<td><?=$v['liquidacion'];?></td>
+										<td align="right"><?=$v['recarga'];?></td>
+										<td align="right"><?=$v['total'];?></td>
+										<td align="right"><?=$this->currency->toCurrency($v['base']);?></td>
+									</tr>
+									<?php
+										$total += $v['total'];
+										$total1 += $v['base'];
+								} ?>
+								<tr class="ui-bar-c">
+									<td colspan="4" align="right"><b>Totales</b></td>
+									<td align="right"><b><?=$total;?></b></td>
+									<td align="right"><b><?=$this->currency->toCurrency($total1);?></b></td>
+								</tr>
+								<tr class="ui-bar-d">
+									<td colspan="4" align="right"><b>Total de Ventas Activadas</b></td>
+									<td align="right"><b><?=$this->total;?></b></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+						<?php else : ?>
+						<p>No hay resultados relacionados.</p>
+						<?php endif; ?>
+				</li>
+			</ul>
+		</div>
+		<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+	$.get('<?=$this->baseUrl();?>/json/puntos-venta',function(d){
+		$puntos = d;
+		$('#suc_id').bind('change',function(){
+			var s = '<option value="">[Puntos de Venta]</option>';
+			$($puntos[+$(this).val()]).each(function(i,v){
+				s += '<option value="'+v.idpunto+'">'+v.nombre+'</option>';
+			});
+			$('#pun_id').html(s).val('<?=$this->pun_id;?>').change();
+		}).show().change();
+	},'json');
+</script>
+

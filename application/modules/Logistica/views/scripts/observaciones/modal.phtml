@@ -1,0 +1,56 @@
+<div id="modal">
+	<fieldset class="fieldset" id="addfloating">
+		<legend class="legend">Observaci&oacute;n</legend>
+		<div class="wgclose"><button data-icon="icon-delete" class="button compact" type="button" onclick="$('#modal').hide()"></button></div>
+			<?=$this->obsform->obs_id->renderViewHelper();?>
+			<?=$this->obsform->cli_id->renderViewHelper();?>
+			<?=$this->obsform->pre_id->renderViewHelper();?>
+			<table class="pad">
+				<tr>
+					<td><b>Alarma</b></td>
+					<td><?=$this->obsform->obs_fh_alarma->renderViewHelper();?> <button onclick="$('#obs_fh_alarma').val('')" data-legend="Limpiar Alarma" class="button tiny" type="button" data-icon="icon-delete"></button></td>
+				</tr>
+				<tr>
+					<td valign="top" style="vertical-align: top;"><b>Comentario</b></td>
+					<td><?=$this->obsform->obs_comentario->renderViewHelper();?></td>
+				</tr>
+				<tr>
+					<td><b>Prioridad</b></td>
+					<td class="priori"><?=$this->obsform->obs_prioridad->renderViewHelper();?></td>
+				</tr>
+			</table>
+			<br />
+		<button data-icon="icon-mark" class="button obs compact" type="button">Guardar</button>
+	</fieldset>
+</div>
+
+<script type="text/javascript">
+$('#modal').appendTo('body');
+$('#modal button.obs').live('click',function(){
+	var inputs = $('#modal').find(':input').serialize();
+	$.post('/panel/observaciones/json',inputs,function(d){
+		if(d.st == 0){location.reload();}
+		else{ alert('Este formulario contiene errores.');}
+	},'json');
+});
+$('.addobserva').live('click',function(){$('#modal').show().find('.input').val('');$('body').css('overflow','hidden');});
+$('.delobserva').live('click',function(){
+	if(confirm('Seguro de eliminar esta observacion?')){
+		$.post('/panel/observaciones/delete/obs_id/'+$(this).attr('alt'),function(d){
+			if(d.st == 0){location.reload();}
+		});
+	}
+});
+$('.edobserva').live('click',function(){
+	$('body').css('overflow','hidden');
+	$('#modal').show().find('.input').val('');
+	$.get('/panel/observaciones/get-info/obs_id/'+$(this).attr('alt'),function(d){
+		//reemplaza valores
+		$('#obs_id').val(d.data.obs_id);
+		$('#obs_fh_alarma').val(d.data.alarma);
+		$('#obs_comentario').val(d.data.obs_comentario);
+		$('#obs_prioridad-'+d.data.obs_prioridad).attr('checked',true);
+	},'json');
+
+});
+</script>

@@ -1,0 +1,48 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Opciones</li>
+			<li></li>
+		</ul>
+	</div>
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Titulo</li>
+			<li></li>
+		</ul>
+	</div>
+</div>
+
+<fieldset class="fieldset">
+	<legend class="legend">Recursos Disponibles en tiempo real</legend>
+
+<div class="listview">
+	<table>
+		<thead>
+			<tr class="blue-gradient">
+				<th>Modulo</th>
+				<th>Controlador</th>
+				<th>Acci&oacute;n</th>
+			</tr>
+		</thead>
+		<tbody>
+<?php foreach($this->recursos as $i => $r): ?>
+			<tr>
+				<td rowspan="<?=sizeof($r)+1;?>"><?=$i;?></td>
+			</tr>
+	<?php foreach($r as $ii => $v): ?>
+			<tr>
+				<td><?=$ii;?></td><td>
+		<?php foreach($v as $d): ?>
+			<?=$d;?><br />
+		<?php endforeach; ?>
+		</td></tr>
+	<?php endforeach; ?>
+
+<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>
+
+
+</fieldset>

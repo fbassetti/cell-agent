@@ -1,0 +1,46 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="e">
+			<li data-icon="back"><a title="Volver a Lotes" data-inline="true" data-mini="true" href="<?=$this->baseUrl();?>/activaciones/index/lotes">Volver al Listado</a></li>
+			<li><p><b>Lote SIM</b> </p>
+			</li>
+		</ul>
+		<center>
+			<a data-theme="e" data-role="button" data-inline="true" data-mini="true" data-icon="gear" href="javascript:;" class="imprimir">Imprimir</a> <a data-theme="e" data-role="button" data-mini="true" data-inline="true" data-icon="gear" href="javascript:;" class="exportar">Exportar</a>
+		</center>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Activaciones por Lote - <b><?=$this->lote;?>XXX</b> - Cantidad: <?=sizeof($this->activaciones);?></li>
+			<li>
+				<?php
+					if(is_null($this->activaciones)):
+						elseif(sizeof($this->activaciones) > 0): ?>
+					<table>
+						<thead>
+							<tr class="ui-bar-b" align="center">
+								<th>SIM</th>
+								<th>Abonado</th>
+								<th>Solicitud</th>
+								<th>Estado Actual</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($this->activaciones as $i => $v): ?>
+								<tr class="<?=($v['activacion_estado'] != 'Finalizado') ? 'ui-btn-down-e' : 'ui-btn-up-c';?>">
+									<td>&nbsp;<?=$v['activacion_sim'];?></td>
+									<td><?=$v['activacion_linea'];?></td>
+									<td><?=$v['activacion_nroSol'];?></td>
+									<td><?=$v['activacion_estado'];?></td>
+								</tr>
+								<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php else: ?><div class="alerta">No se encontraron resultados relacionados</div>
+					<?php endif; ?>
+			</li>
+
+		</ul>
+	</div>
+</div>

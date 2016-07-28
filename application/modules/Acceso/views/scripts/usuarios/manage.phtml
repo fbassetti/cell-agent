@@ -1,0 +1,35 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Opciones</li>
+			<li data-icon="grid"><a href="<?=$this->baseUrl();?>/acceso/roles/index">Roles</a></li>
+			<li data-icon="gear"><a href="<?=$this->baseUrl();?>/acceso/usuarios/assoc/usu_id/<?=$this->usuario['idusuario'];?>">Administrar Roles</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Administrar Permisos de <b><?=$this->usuario['username'];?></b></li>
+			<li>
+				<table>
+					<thead>
+						<tr class="ui-bar-d">
+							<th width="200">(<?=sizeof($this->resultados);?>) Roles Asignados</th>
+							<th></th>
+						</tr>
+					</thead>
+					<?php if(!empty($this->resultados)): ?>
+						<tbody>
+							<?php foreach($this->resultados as $i => $v): ?>
+								<tr class="ui-btn-up-c">
+									<td><?=$v['rol_nombre'];?></td>
+									<td><a data-icon="icon-gear" class="button tiny green-gradient" href="<?=$this->baseUrl();?>/acceso/roles/manage/rol_id/<?=$v['rol_id'];?>">recursos</a></td>
+								</tr>
+								<?php endforeach; ?>
+						</tbody>
+						<?php endif; ?>
+				</table>
+			</li>
+		</ul>
+	</div>
+</div>

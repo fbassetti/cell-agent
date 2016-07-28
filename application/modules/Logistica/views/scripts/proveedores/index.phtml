@@ -1,0 +1,44 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Opciones</li>
+			<li><input name="search" placeholder="Buscar" type="text" /></li>
+			<li data-icon="add"><a href="<?=$this->baseUrl();?>/logistica/proveedores/alta">Nuevo Proveedor</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Proveedores</li>
+			<li>
+
+				<?php if(!empty($this->resultados)): ?>
+					<table>
+						<thead>
+							<tr class="ui-bar-b" align="center">
+								<th>Raz&oacute;n Social</th>
+								<th>Nombre Comercial</th>
+								<th>Domicilio</th>
+								<th>Tel.</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($this->resultados as $i => $v){ ;?>
+								<tr class="ui-btn-up-c">
+									<td><a href="<?=$this->baseUrl();?>/logistica/proveedores/ver/prv_id/<?=$v['idproveedor'];?>"><b><?=$v['Razon'];?></b></a></td>
+									<td><a href="<?=$this->baseUrl();?>/logistica/proveedores/ver/prv_id/<?=$v['idproveedor'];?>"><b><?=$v['NombreComercial'];?></b></a></td>
+									<td><?=$v['Domicilo'];?></td>
+									<td nowrap="nowrap"><?=$v['Telefono'];?></td>
+								</tr>
+								<?php } ?>
+						</tbody>
+					</table>
+					<?=$this->paginador($this->paginas);?>
+					<?php else: ?>
+					<p>No hay Proveedores en el sistema.</p>
+					<?php endif; ?>
+
+			</li>
+		</ul>
+	</div>
+</div>

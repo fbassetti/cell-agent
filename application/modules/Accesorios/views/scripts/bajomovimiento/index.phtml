@@ -1,0 +1,68 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<form method="post" action="<?=$this->baseUrl();?>/accesorios/bajomovimiento/index">
+			<ul data-role="listview" data-inset="true" data-theme="e">
+				<li data-role="list-divider">Bajo Movimiento</li>
+				<li><?=$this->form->suc_id->renderViewHelper();?></li>
+				<li><?=$this->form->pun_id->renderViewHelper();?></li>
+				<li data-role="fieldcontain">Desde: <input class="icon-calendar" type="text" name="desde" id="from" data-mini="true" value="<?=$this->desde;?>" size="8" /></li>
+				<li data-role="fieldcontain">Hasta:	<input type="text" id="to" name="hasta" value="<?=$this->hasta;?>" size="8" /></li>
+				<li data-role="fieldcontain">Limite: <input style="width:40px;" value="<?=$this->limite;?>" type="number" name="limite" max="50" min="0" class="input" /></li>
+				<li><button data-theme="a" data-inline="true" data-mini="true" data-icon="search" title="Buscar" type="submit">Buscar</button></li>
+			</ul>
+		</form>
+<?php if(sizeof($this->resultados) > 0): ?>
+		<center>
+			<a data-theme="e" data-role="button" data-inline="true" data-mini="true" data-icon="gear" href="javascript:;" class="imprimir">Imprimir</a> <a data-theme="e" data-role="button" data-mini="true" data-inline="true" data-icon="gear" href="javascript:;" class="exportar">Exportar</a>
+		</center>
+<?php endif; ?>
+	</div>
+
+<?php if(!is_null($this->resultados)): ?>
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider"><b><?=$this->periodo;?></b> - <b><?=sizeof($this->resultados);?></b> Articulos encontrados</li>
+			<li>
+			<?php if(sizeof($this->resultados) > 0): ?>
+					<table>
+						<thead>
+							<tr class="ui-bar-b" align="center">
+								<th width="60">C&oacute;digo</th>
+								<th width="350">Art&iacute;culo</th>
+								<th>Ventas</th>
+								<th>Total Ingresado</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($this->resultados as $i => $v): ?>
+								<tr class="ui-btn-up-c">
+									<td><?=$v['codigobarra'];?></td>
+									<td><?=$v['descripcion'];?></td>
+									<td align="right"><?=intval($v['cantidad']);?></td>
+									<td align="right"><?=$v['total'];?></td>
+								</tr>
+								<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php else: ?>
+					<p>Los resultados no pueden ser visualizados. No existen Ingresos para la fecha requerida.</p>
+					<?php endif; ?>
+			</li>
+		</ul>
+
+	</div>
+<?php endif; ?>
+</div>
+
+<script type="text/javascript">
+	$.get('<?=$this->baseUrl();?>/json/puntos-venta',function(d){
+		$puntos = d;
+		$('#suc_id').bind('change',function(){
+			var s = '<option value="">[Puntos de Venta]</option>';
+			$($puntos[+$(this).val()]).each(function(i,v){
+				s += '<option value="'+v.idpunto+'">'+v.nombre+'</option>';
+			});
+			$('#pun_id').html(s).val('<?=$this->pun_id;?>').change();
+		}).show().change();
+	},'json');
+</script>

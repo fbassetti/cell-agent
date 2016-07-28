@@ -1,0 +1,75 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<form method="post" action="<?=$this->baseUrl();?>/logistica/index/consultar-equipos">
+			<ul data-role="listview" data-inset="true" data-theme="e">
+				<li data-role="list-divider">Consultar Equipos por IDMSN</li>
+				<li><?=$this->form->idmsn->renderViewHelper();?></li>
+				<li><button data-theme="a" data-inline="true" data-mini="true" data-icon="search" title="Buscar" type="submit">Buscar</button>
+				</li>
+			</ul>
+		</form>
+	</div>
+
+<?php if(!is_null($this->equipo)): ?>
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li>
+
+	<?php if(!empty($this->equipo)): ?>
+		<table>
+			<tr>
+				<td class="ui-bar-b"><b>IDMSN</b></td>
+				<td align="right" class="ui-btn-up-c">&nbsp;<?=$this->equipo['idmsn'];?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b"><b>Fecha Carga</b></td>
+				<td align="right" class="ui-btn-up-c"><?=$this->equipo['fh_carga'];?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b"><b>Fecha Asignaci&oacute;n</b></td>
+				<td align="right" class="ui-btn-up-c"><?=$this->equipo['fh_asignacion'];?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b">Fecha Vencimiento</td>
+				<td align="right" class="ui-btn-up-c"><?=$this->equipo['fecha_vencimiento'];?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b"><b>Costo</b></td>
+				<td align="right" class="ui-btn-up-c"><?=$this->currency->toCurrency($this->equipo['costo']);?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b"><b>Costo Real</b></td>
+				<td align="right" class="ui-btn-up-c"><?=$this->currency->toCurrency($this->equipo['costo_r']);?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b"><b>IVA</b></td>
+				<td align="right" class="ui-btn-up-c"><?=$this->equipo['Iva'];?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b"><b>Marca</b></td>
+				<td align="right" class="ui-btn-up-c"><?=$this->equipo['marca'];?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b"><b>Modelo</b></td>
+				<td align="right" class="ui-btn-up-c"><?=$this->equipo['modelo'];?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b"><b>Estado</b></td>
+				<td align="right" class="ui-btn-up-c"><?=$this->equipo['estado'];?></td>
+			</tr>
+			<tr>
+				<td class="ui-bar-b"><b>Punto / Vendedor</b></td>
+				<td align="right" class="ui-btn-up-c"><?=($this->cache_vendedores[$this->equipo['idvendedor']] != '') ?
+					$this->cache_vendedores[$this->equipo['idvendedor']] : $this->cache_puntos[$this->equipo['idvendedor']];?></td>
+			</tr>
+		</table>
+
+		<?php else: ?>
+		<p>No hay resultados relacionados.</p>
+		<?php endif; ?>
+			</li>
+		</ul>
+
+	</div>
+<?php endif; ?>
+</div>

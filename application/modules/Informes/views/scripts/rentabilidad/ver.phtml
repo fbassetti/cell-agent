@@ -1,0 +1,67 @@
+<fieldset class="fieldset">
+	<legend class="legend">Rentabilidad Mensual de Punto de Venta - <b><?=$this->periodo;?></b></legend>
+
+	<form action="<?=$this->baseUrl();?>/informes/rentabilidad" method="post">
+		<?=$this->form->suc_id->renderViewHelper();?>
+		<?=$this->form->pun_id->renderViewHelper();?>
+		<?=$this->form->mm->renderViewHelper();?>
+		<?=$this->form->yy->renderViewHelper();?>
+
+		<button data-icon="search" type="submit" class="button search"></button>
+	</form>
+	<p></p>
+
+<?php if(is_null($this->cuentas)): ?>
+<?php elseif(sizeof($this->cuentas) > 0): ?>
+	<table>
+		<thead>
+			<tr>
+				<th width="300">Nombre de Cuenta</th>
+				<th>Cantidad</th>
+				<th width="80">Debe</th>
+				<th width="80">Haber</th>
+			</tr>
+		</thead>
+		<tbody>
+<?php foreach($this->cuentas as $i => $v): ?>
+			<tr>
+				<td><?=ucwords(strtolower($v['cuenta']));?></td>
+				<td align="right"><?=$v['cantidad'];?></td>
+				<td align="right"><?=($v['debe_haber'] == 'D') ? $this->currency->toCurrency($v['monto']) : '';?></td>
+				<?php ($v['debe_haber'] == 'D') ? $total1 += $v['monto'] : '';?>
+				<td align="right"><?=($v['debe_haber'] == 'H') ? $this->currency->toCurrency($v['monto']) : '';?></td>
+				<?php ($v['debe_haber'] == 'H') ? $total2 += $v['monto'] : '';?>
+			</tr>
+<?php endforeach; ?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td align="right" colspan="2"><b><u>Totales</u></b></td>
+				<td align="right"><b><?=$this->currency->toCurrency($total1);?></b></td>
+				<td align="right"><b><?=$this->currency->toCurrency($total2);?></b></td>
+			</tr>
+			<tr>
+				<td colspan="3" align="right"><b><u>Balance</u></b></td>
+				<td align="right"><b><?=$this->currency->toCurrency($total1-$total2);?></b></td>
+			</tr>
+		</tfoot>
+	</table>
+<?php else: ?>No hay Resultados Existentes
+<?php endif; ?>
+<br />
+</fieldset>
+
+
+<script type="text/javascript">
+$.get('<?=$this->baseUrl();?>/json/puntos-venta',function(d){
+	$puntos = d;
+	$('#suc_id').bind('change',function(){
+		var s = '<option value="">[Puntos de Venta]</option>';
+		$($puntos[+$(this).val()]).each(function(i,v){
+			s += '<option value="'+v.idpunto+'">'+v.nombre+'</option>';
+		});
+		$('#pun_id').html(s).val('<?=$this->pun_id;?>');
+	}).show().trigger('change');
+},'json');
+
+</script>

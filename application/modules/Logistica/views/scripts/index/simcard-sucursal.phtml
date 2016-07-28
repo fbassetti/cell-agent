@@ -1,0 +1,54 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<form method="post" action="<?=$this->baseUrl();?>/logistica/index/simcard-sucursal">
+			<ul data-role="listview" data-inset="true" data-theme="e">
+				<li data-role="list-divider">Simcard por Sucursal</li>
+				<li><?=$this->form->suc_id->renderViewHelper();?>
+				<li><button data-theme="a" data-inline="true" data-mini="true" data-icon="search" title="Buscar" type="submit">Buscar</button></li>
+				<?php if(!is_null($this->equipos)): ?>
+					<li><b><?=$this->total;?></b> registros en total</li>
+					<?php endif; ?>
+			</ul>
+		</form>
+	</div>
+
+	<?php if(!is_null($this->equipos)): ?>
+		<div id="block-b" class="ui-block-b" data-theme="c">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">Equipos</li>
+				<li>
+					<?php if(!empty($this->equipos)): ?>
+						<table cellpadding="0" cellspacing="0">
+							<thead>
+								<tr class="ui-bar-b">
+									<th align="center">Marca</th>
+									<th align="center">Modelo</th>
+									<th align="center">Cantidad</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->equipos as $i => $v){ ?>
+									<tr class="ui-btn-up-c">
+										<td><?=$v['marca'];?></td>
+										<td><?=$v['modelo'];?></td>
+										<td align="right"><?=$v['cant'];?> <?php $total += $v['cant'];?></td>
+									</tr>
+									<?php } ?>
+							</tbody>
+							<tfoot>
+								<tr class="ui-btn-up-c">
+									<td colspan="2" align="right">Total</td>
+									<td align="right"><?=$total;?></td>
+								</tr>
+							</tfoot>
+						</table>
+						<?=$this->paginador($this->paginas);?>
+						<?php else: ?>
+						<p>No hay resultados relacionados.</p>
+						<?php endif; ?>
+				</li>
+			</ul>
+
+		</div>
+		<?php endif; ?>
+</div>

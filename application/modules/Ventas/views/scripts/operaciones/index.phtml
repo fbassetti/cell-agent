@@ -1,0 +1,114 @@
+<fieldset class="fieldset">
+	<legend class="legend">Operaciones / Venta</legend>
+
+	<form action="<?=$this->baseUrl();?>/ventas/operaciones/index" method="post" id="query_log">
+		<?=$this->form->campo->renderViewHelper();?>
+		<?=$this->form->query->renderViewHelper();?> <?=$this->form->tilde->renderViewHelper();?> avanzado &nbsp; <button title="Buscar" class="button search" type="submit"></button><br />
+		<p style="margin-top:3px;vertical-align:top"><?=$this->form->texto->renderViewHelper();?>
+<?php if($this->error) :?>
+		<b style="vertical-align:top"> &nbsp; &nbsp;Errores:</b>
+		<?=$this->form->error->renderViewHelper();?></p>
+<?php endif; ?>
+	</form>
+<?php
+	if(is_null($this->operaciones)):
+	elseif(sizeof($this->operaciones) > 0): ?>
+		<form method="post" action="<?=$this->baseUrl();?>/ventas/operaciones/asignacion" id="form_asigna">
+			<button type="button" class="button" id="asigna_boton">Asignar a Vendedor &raquo;</button>
+			<div class="pad button-height"><?=sizeof($this->operaciones);?> Resultados encontrados.</div>
+			<input type="hidden" name="ven_id" value="" id="ven_id" />
+			<input type="hidden" name="suc_id" value="" id="sucursal" />
+			<table id="results">
+				<thead>
+					<tr>
+						<td><input type="checkbox" onclick="$('.trow').attr('checked',$(this).is(':checked'))" /></td>
+						<th>SIM</th>
+						<th>Abonado</th>
+						<th>Solicitud</th>
+						<th>Operatoria</th>
+						<th>Vendedor</th>
+						<th>Punto</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach($this->operaciones as $i => $v): ?>
+						<tr>
+							<td><input class="trow" type="checkbox" name="ids[]" value="<?=$v['idventa'];?>-<?=$v['nrosolicitud'];?>" /></td>
+							<td><?=$v['sim'];?></td>
+							<td><?=$v['abonado'];?></td>
+							<td><?=$v['nrosolicitud'];?></td>
+							<td><?=$this->cache_operatorias[$v['operatoria']];?></td>
+							<td><?=$this->cache_vendedores[$v['idvendedor']];?></td>
+							<td><?=$v['idvendedor'];?></td>
+						</tr>
+						<?php endforeach; ?>
+				</tbody>
+			</table>
+		</form>
+
+		<!-- Asigna a vendedor -->
+		<div id="asigna_vend" style="display: none;width:600px;">
+			<button type="button" class="button" onclick="$('#form_asigna,#asigna_vend,#query_log').slideToggle();">&laquo; Modificar</button><br /><br />
+			<div class="pad button-height"><b id="asigna_rr"></b> Resultados seleccionados.</div>
+			<fieldset class="fieldset">
+				<legend class="legend">Seleccione Vendedor</legend>
+				<div><?=$this->form_select->renderViewHelper();?>
+				<select id="vendor" size="10" style="height: 100px;"></select>
+
+				<input type="text" class="input" placeholder="Vendedor" id="search" /></div>
+				<br />
+				<center><button id="proceso" type="button" class="button">Asignar &raquo;</button></center>
+			</fieldset>
+
+<script type="text/javascript">
+$.get('<?=$this->baseUrl();?>/json/vendedores',function(d){
+	$vend = d;
+	$('#suc_id').bind('change',function(){
+		var s = '';
+		$($vend[$(this).val()]).each(function(i,v){
+			s += '<option value="'+v.idpunto+'">'+v.nombre+'</option>';
+		});
+		$('#vendor').html(s);
+	}).show().trigger('change');
+},'json');
+$('#asigna_boton').live('click',function(){
+	if($('#results .trow:checked').length > 0){
+		$('#asigna_vend').slideDown();
+		$('#form_asigna,#query_log').slideUp();
+		$('#asigna_rr').html($('#results .trow:checked').length+'');
+	}
+	else {
+		alert('Debe seleccionar elementos');
+	}
+});
+$('#search').live('input keyup',function(){
+	var s = $(this).val().toLowerCase().split(" ");
+	if(s == '') return;
+	$.each(s, function(i,v){
+		$("#vendor option:not(:selected)").filter(function(e){
+			return (new RegExp(v,'i').test($(this).text().toLowerCase()));
+		}).eq(0).attr('selected',true);
+	});
+});
+$('#proceso').click(function(){
+	if($('#vendor').val() == null || $('#vendor').val() == ''){
+		return alert('Seleccione Vendedor.');
+	}
+	$('#ven_id').val($('#vendor').val());
+	$('#sucursal').val($('#suc_id').val());
+	$('#form_asigna').submit();
+});
+</script>
+
+		</div>
+
+		<?php else: ?><div class="alerta">No se encontraron resultados relacionados</div>
+		<?php endif; ?>
+</fieldset>
+
+<script type="text/javascript">
+	$('#tilde').live('click',function(){
+		$('#query').attr('disabled',$(this).is(':checked'));
+		return ($(this).is(':checked')) ? $('#texto').show() : $('#texto').hide();
+	});
+</script>

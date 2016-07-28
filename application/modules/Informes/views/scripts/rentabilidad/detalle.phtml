@@ -1,0 +1,138 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<form action="<?=$this->baseUrl();?>/informes/rentabilidad/detalle" method="post">
+			<ul data-role="listview" data-inset="true" data-theme="e">
+				<li data-role="list-divider">B&uacute;squeda</li>
+				<li><?=$this->form->suc_id->renderViewHelper();?></li>
+				<li data-role="fieldcontain">Desde: <input class="icon-calendar" type="text" name="desde" id="from" data-mini="true" value="<?=$this->desde;?>" size="8" /></li>
+				<li data-role="fieldcontain">Hasta:	<input type="text" id="to" name="hasta" value="<?=$this->hasta;?>" size="8" /></li>
+				<li><button data-theme="a" data-inline="true" data-mini="true" data-icon="search" title="Buscar" type="submit">Buscar</button></li>
+				<?php if($this->valid): ?>
+					<li data-icon="plus" data-theme="a"><a href="javascript:;" onclick="$('#mask,#valid').show()">Nuevo Concepto</a></li>
+					<li data-theme="a"><a href="<?=$this->baseUrl();?>/informes/rentabilidad/index/suc_id/<?=$this->suc_id;?>/desde/<?=$this->desdeUrl;?>/hasta/<?=$this->hastaUrl;?>" class="button">Sin Detalle</a></li>
+					<?php endif; ?>
+			</ul>
+		</form>
+		<?php if(sizeof($this->cuentas) > 0): ?>
+			<center>
+				<a data-theme="e" data-role="button" data-inline="true" data-mini="true" data-icon="gear" href="javascript:;" class="imprimir">Imprimir</a> <a data-theme="e" data-role="button" data-mini="true" data-inline="true" data-icon="gear" href="javascript:;" class="exportar">Exportar</a>
+			</center>
+			<?php endif; ?>
+
+	</div>
+
+	<?php if($this->valid): ?>
+		<div id="block-b" class="ui-block-b" data-theme="c">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">Rentabilidad de Sucursal Detallado - <b><?=$this->cache_sucursales[$this->suc_id];?></b> - <b><?=$this->periodo;?></b></li>
+				<li>
+					<?php if(is_null($this->cuentas)): ?>
+						<?php elseif(sizeof($this->cuentas) > 0): ?>
+						<table>
+							<thead>
+								<tr class="ui-bar-b" align="center">
+									<th></th>
+									<th>Fecha</th>
+									<th width="300">Nombre de Cuenta</th>
+									<th width="80">Debe</th>
+									<th width="80">Haber</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->cuentas as $i => $v): ?>
+									<tr class="ui-btn-up-c">
+										<?php if($v['fh'] != ''): ?>
+										<td><a class="remover" id="<?=$v['ren_id'];?>" data-theme="e" href="javascript:;" data-icon="delete" data-iconpos="notext" data-role="button" data-inline="true"></a></td>
+										<td><?=$v['fh'];?></td>
+											<?php else: ?>
+										<td colspan="2" class="ui-bar-c">[Sistema]</td>
+											<?php endif; ?>
+										<td><?=ucwords(strtolower($v['cuenta']));?></td>
+										<td align="right"><?=($v['debe_haber'] == 'D') ? $this->currency->toCurrency($v['monto']) : '';?></td>
+										<?php ($v['debe_haber'] == 'D') ? $total1 += $v['monto'] : '';?>
+										<td align="right"><?=($v['debe_haber'] == 'H') ? $this->currency->toCurrency($v['monto']) : '';?></td>
+										<?php ($v['debe_haber'] == 'H') ? $total2 += $v['monto'] : '';?>
+									</tr>
+									<?php endforeach; ?>
+							</tbody>
+							<tfoot>
+								<tr class="ui-bar-c">
+									<td align="right" colspan="3"><b><u>Totales</u></b></td>
+									<td align="right"><b><?=$this->currency->toCurrency($total1);?></b></td>
+									<td align="right"><b><?=$this->currency->toCurrency($total2);?></b></td>
+								</tr>
+								<tr class="ui-bar-c">
+									<td colspan="4" align="right"><b><u>Balance</u></b></td>
+									<td align="right"><b><?=$this->currency->toCurrency($total1-$total2);?></b></td>
+								</tr>
+							</tfoot>
+						</table>
+						<?php else: ?><p>No hay Resultados Existentes</p>
+
+						<?php endif; ?>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!--style="display: none;"-->
+	<div id="valid" class="ui-block-b" data-theme="c">
+		<form id="form" action="<?=$this->baseUrl();?>/informes/rentabilidad/add-concepto/suc_id/<?=$this->suc_id;?>/desde/<?=$this->desdeUrl;?>/hasta/<?=$this->hastaUrl;?>/d/1" method="post">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">A&ntilde;ade Concepto</li>
+				<li><input type="hidden" name="suc_id" value="<?=$this->suc_id;?>" /><input type="hidden" name="cue_id" value="" id="cue_id" /><b id="concepto">Concepto</b>
+				</li>
+				<li data-role="fieldcontain">
+					<fieldset data-role="controlgroup" data-type="horizontal">
+						<legend>Cuenta</legend>
+						<input data-mini="true" type="radio" name="tipo" id="radio-choice-c" value="D" checked="checked" />
+						<label for="radio-choice-c">Debe</label>
+						<input data-mini="true" type="radio" name="tipo" id="radio-choice-d" value="H" />
+						<label for="radio-choice-d">Haber</label>
+					</fieldset>
+				</li>
+				<li data-role="fieldcontain">
+					<label for="limit">Fecha</label><input type="text" name="desde" id="limit" class="input-unstyled datepicker" value="<?=$this->desde;?>" size="8" />
+				</li>
+				<li data-role="fieldcontain">
+					<label for="box_monto">Monto</label>
+					<input type="text" id="box_monto" name="ren_monto" class="input" placeholder="Monto.." size="6" /></li>
+				<li><button data-theme="a" data-inline="true" data-mini="true" data-icon="add" type="button" id="proceso" class="button">Guardar</button> <button data-theme="e" data-inline="true" data-mini="true" data-icon="delete" type="button" onclick="$('#valid,#mask').hide()">Cerrar</button></li>
+			</ul>
+		</form>
+
+		<ul id="busqueda_cue" data-role="listview" data-filter="true" data-inset="true" data-theme="c">
+			<?php foreach($this->cuentas_select as $i => $v): ?>
+				<li><a class="bus_cue" data-id="<?=$i;?>" style="font-size:11px;" data-mini="true" href="javascript:;"><?=$v;?></a></li>
+				<?php endforeach; ?>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		$("#limit").datepicker({
+			dateFormat : 'dd/mm/yy',
+			minDate: new Date(<?=$this->desdeEn[0];?>,<?=intval($this->desdeEn[1])-1;?>,<?=$this->desdeEn[2];?>),
+			maxDate: new Date(<?=$this->hastaEn[0];?>,<?=intval($this->hastaEn[1])-1;?>,<?=$this->hastaEn[2];?>),
+			showButtonPanel : true,
+		});
+		$('.bus_cue').live('click',function(){
+			$('#concepto').html($(this).text());
+			$('#cue_id').val($(this).attr('data-id'));
+		});
+		$('#proceso').click(function(){
+			if($('#cue_id').val() == ''){
+				return alert('Seleccione Concepto.');
+			}
+			$('#form').submit();
+		});
+		$('.remover').live('click',function(){
+			if(!confirm('Desea eliminar este item?')){
+				return;
+			}
+			$.post('<?=$this->baseUrl();?>/informes/rentabilidad/delete-item',{ id : $(this).attr('id')},function(d){
+				if(d.st == 1){
+					location.href = '<?=$this->baseUrl();?>/informes/rentabilidad/detalle/suc_id/<?=$this->suc_id;?>/desde/<?=$this->desdeUrl;?>/hasta/<?=$this->hastaUrl;?>';
+				}
+			},'json');
+		});
+	</script>
+	<?php endif; ?>

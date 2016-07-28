@@ -1,0 +1,51 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="e">
+			<li data-icon="back"><a href="<?=$this->baseUrl();?>/logistica/pedidos">Listado de Pedidos</a></li>
+			<li data-icon="none"><a><b>Articulos</b></a></li>
+			<li style="display: none;"><div>
+				<ul><?php foreach($this->cache_grupos as $i => $v):?>
+					<li><a data-role="none" href="<?=$this->baseUrl();?>/logistica/pedidos/accesorios/id/<?=$i;?>"><?=$v;?></a></li>
+<?php endforeach; ?></ul>
+				</div>
+			</li>
+			<li data-icon="none"><a><b>Equipos</b></a></li>
+			<li><div>
+				<ul><?php foreach($this->cache_marcas as $i => $v):?>
+					<li><a data-role="none" href="<?=$this->baseUrl();?>/logistica/pedidos/equipos/id/<?=$i;?>"><?=$v;?></a></li>
+<?php endforeach; ?></ul>
+				</div>
+			</li>
+
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Alta de Pedido - Productos (<?=sizeof($this->productos);?>)</b></li>
+			<li><p><b>A&ntilde;adir Articulos</b> - <?=$this->cache_marcas[$this->mar_id];?></p>
+				<?php if(!empty($this->resultados)): ?>
+					<table>
+						<thead>
+							<tr class="ui-bar-d" align="center">
+								<th>Modelo</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($this->resultados as $i => $v): ?>
+								<tr class="ui-btn-up-c">
+									<!--<td><?=$v['idmarca'];?></td>-->
+									<td><?=$this->cache_marcas[$this->mar_id];?> <?=$v['Modelo'];?></td>
+									<td align="center"><a href="<?=$this->baseUrl();?>/logistica/pedidos/agrega-producto/id/<?=$v['idmodelo'];?>/tp/E" data-role="button" data-icon="arrow-r" data-iconpos="notext"></a></td>
+								</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php else: ?>
+					<p>No se han a&ntilde;adido productos.</p>
+					<?php endif; ?>
+			</li>
+		</ul>
+	</div>
+</div>

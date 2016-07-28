@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+	<nav>
+		<default>
+			<label>Vision General</label>
+			<module>default</module>
+			<resource>default</resource>
+		</default>
+		<logistica>
+			<label>Logistica</label>
+			<uri>javascript:;</uri>
+			<resource>logistica</resource>
+			<pages>
+				<link1>
+					<label>Consultar Equipos</label>
+					<module>logistica</module>
+					<controller>index</controller>
+					<action>consultar-equipos</action>
+				</link1>
+				<link2>
+					<label>Consultar Sim</label>
+					<module>logistica</module>
+					<controller>index</controller>
+					<action>consultar-sim</action>
+				</link2>
+				<link3>
+					<label>Equipos por Sucursal</label>
+					<module>logistica</module>
+					<controller>index</controller>
+					<action>equipos-sucursal</action>
+				</link3>
+				<link4>
+					<label>Simcard por Sucursal</label>
+					<module>logistica</module>
+					<controller>index</controller>
+					<action>simcard-sucursal</action>
+				</link4>
+				<link5>
+					<label>Proveedores</label>
+					<module>logistica</module>
+					<controller>proveedores</controller>
+					<action>index</action>
+				</link5>
+				<link6>
+					<label>Cotizaciones</label>
+					<module>logistica</module>
+					<controller>cotizaciones</controller>
+					<action>index</action>
+				</link6>
+				<link7>
+					<label>Pedidos</label>
+					<module>logistica</module>
+					<controller>pedidos</controller>
+					<action>index</action>
+				</link7>
+				<link8>
+					<label>Niveles Autoridad</label>
+					<module>logistica</module>
+					<controller>niveles</controller>
+					<action>index</action>
+				</link8>
+			</pages>
+		</logistica>
+		<ventas>
+			<label>Ventas</label>
+			<uri>javascript:;</uri>
+			<resource>ventas</resource>
+			<pages>
+				<link1>
+					<label>Facturacion por Punto</label>
+					<module>ventas</module>
+					<controller>index</controller>
+					<action>facturacion-punto</action>
+				</link1>
+				<link2>
+					<label>Comisiones Por Punto</label>
+					<module>ventas</module>
+					<controller>index</controller>
+					<action>comision-punto</action>
+				</link2>
+				<link3>
+					<label>Asignacion</label>
+					<module>ventas</module>
+					<controller>operaciones</controller>
+				</link3>
+			</pages>
+		</ventas>
+		<caja>
+			<label>Informes Caja</label>
+			<uri>javascript:;</uri>
+			<resource>caja</resource>
+			<pages>
+				<link1>
+					<label>Caja en Punto</label>
+					<module>caja</module>
+					<controller>index</controller>
+					<action>informe</action>
+				</link1>
+				<link2>
+					<label>Caja en Vendedor</label>
+					<module>caja</module>
+					<controller>index</controller>
+					<action>vendedor</action>
+				</link2>
+				<link3>
+					<label>Caja Diaria en Puntos</label>
+					<module>caja</module>
+					<controller>index</controller>
+					<action>diaria</action>
+				</link3>
+			</pages>
+		</caja>
+		<locales>
+			<label>Locales</label>
+			<uri>javascript:;</uri>
+			<resource>locales</resource>
+			<pages>
+				<link1>
+					<label>Acceso a Camaras</label>
+					<module>locales</module>
+					<controller>index</controller>
+				</link1>
+				<link2>
+					<label>Gastos por Local</label>
+					<module>locales</module>
+					<controller>index</controller>
+					<action>gastos</action>
+				</link2>
+				<link3>
+					<label>Rentabilidad</label>
+					<module>informes</module>
+					<controller>rentabilidad</controller>
+					<action>index</action>
+				</link3>
+			</pages>
+		</locales>
+		<recargas>
+			<label>Recargas</label>
+			<uri>javascript:;</uri>
+			<resource>recargas</resource>
+			<pages>
+				<link1>
+					<label>Listado por Sucursal</label>
+					<module>recargas</module>
+					<controller>index</controller>
+					<action>listado-por-sucursal</action>
+				</link1>
+				<link2>
+					<label>Listado por Vendedor</label>
+					<module>recargas</module>
+					<controller>index</controller>
+					<action>listado-por-vendedor</action>
+				</link2>
+				<link3>
+					<label>Promedio de Recargas</label>
+					<module>recargas</module>
+					<controller>index</controller>
+					<action>promedio-recargas</action>
+				</link3>
+			</pages>
+		</recargas>
+		<accesorios>
+			<label>Accesorios</label>
+			<uri>javascript:;</uri>
+			<resource>accesorios</resource>
+			<pages>
+				<link1>
+					<label>Stock por Codigo</label>
+					<module>accesorios</module>
+					<controller>stock</controller>
+					<action>por-codigo</action>
+				</link1>
+				<link2>
+					<label>Egresos</label>
+					<module>accesorios</module>
+					<controller>egresos</controller>
+				</link2>
+				<link3>
+					<label>Ingresos</label>
+					<module>accesorios</module>
+					<controller>ingresos</controller>
+				</link3>
+				<link4>
+					<label>Bajo Movimiento</label>
+					<module>accesorios</module>
+					<controller>bajomovimiento</controller>
+				</link4>
+
+			</pages>
+		</accesorios>
+		<herramientas>
+			<label>Herramientas</label>
+			<uri>javascript:;</uri>
+			<resource>herramientas</resource>
+			<pages>
+				<link1>
+					<label>Descargas</label>
+					<module>herramientas</module>
+					<controller>index</controller>
+					<action>descargas</action>
+				</link1>
+			</pages>
+		</herramientas>
+		
+		<usuarios>
+			<label>Usuarios</label>
+			<uri>javascript:;</uri>
+			<pages>
+				<link1>
+					<label>Listado</label>
+					<module>acceso</module>
+					<controller>usuarios</controller>
+				</link1>
+				<link2>
+					<label>Roles</label>
+					<module>acceso</module>
+					<controller>roles</controller>
+				</link2>
+				<link3>
+					<label>Recursos</label>
+					<module>acceso</module>
+					<controller>recursos</controller>
+				</link3>
+			</pages>
+		</usuarios>
+		
+		<activaciones>
+			<label>Activaciones</label>
+			<uri>javascript:;</uri>
+			<resource>activaciones</resource>
+			<pages>
+				<link1>
+					<label>Listado</label>
+					<module>activaciones</module>
+				</link1>
+				<link2>
+					<label>Lotes Disponibles</label>
+					<module>activaciones</module>
+					<controller>index</controller>
+					<action>lotes</action>
+				</link2>
+				<link3>
+					<label>Estadisticas</label>
+					<module>activaciones</module>
+					<controller>estadisticas</controller>
+				</link3>
+			</pages>
+		</activaciones>
+		<usuario>
+			<id>user</id>
+			<label>Usuario</label>
+			<uri>javascript:;</uri>
+			<pages>
+				<link1>
+					<label>Accesos Rapidos</label>
+					<module>default</module>
+					<controller>index</controller>
+					<action>widgets</action>
+					
+				</link1>
+				<link2>
+					<label>Datos Personales</label>
+					<module>default</module>
+					<controller>usuario</controller>
+				</link2>
+				<link3>
+					<label>Sesiones</label>
+					<module>default</module>
+					<controller>index</controller>
+					<action>sesiones</action>
+				</link3>
+				<link4>
+					<label>Cerrar Sesion</label>
+					<uri>javascript:if(confirm('Desea desloguear?')){ location.href='/web/index/logout'};</uri>
+				</link4>
+			</pages>
+		</usuario>
+	</nav>
+</configdata>

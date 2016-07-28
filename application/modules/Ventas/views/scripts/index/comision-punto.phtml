@@ -1,0 +1,92 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<form method="post" action="<?=$this->baseUrl();?>/ventas/index/comision-punto">
+			<ul data-role="listview" data-inset="true" data-theme="e">
+				<li data-role="list-divider">Comisi&oacute;n por Punto</li>
+				<li><?=$this->form->suc_id->renderViewHelper();?></li>
+				<li><?=$this->form->pun_id->renderViewHelper();?></li>
+				<li><?=$this->form->yy->renderViewHelper();?></li>
+				<li><?=$this->form->mm->renderViewHelper();?></li>
+				<li><?=$this->form->operatoria->renderViewHelper();?></li>
+				<li><button data-theme="a" data-inline="true" data-mini="true" data-icon="search" title="Buscar" type="submit">Buscar</button></li>
+			</ul>
+		</form>
+		<?php if(!empty($this->resultados)): ?>
+			<center>
+				<a data-theme="e" data-role="button" data-inline="true" data-mini="true" data-icon="gear" href="javascript:;" class="imprimir">Imprimir</a> <a data-theme="e" data-role="button" data-mini="true" data-inline="true" data-icon="gear" href="javascript:;" class="exportar">Exportar</a>
+			</center>
+			<?php endif; ?>
+	</div>
+
+	<?php if(!is_null($this->resultados)): ?>
+		<div id="block-b" class="ui-block-b" data-theme="c">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider"><b><?=$this->periodo;?></b></li>
+				<li><?php if(!empty($this->resultados)): ?>
+						<table>
+							<thead>
+								<tr class="ui-bar-b" align="center">
+									<th>Tipo Operaci&oacute;n</th>
+									<th>Sucursal</th>
+									<th>Punto de Venta</th>
+									<th>Operatoria</th>
+									<th>Ventas</th>
+									<th>Puntuaci&oacute;n</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->resultados as $a => $b): ?>
+									<tr class="ui-btn-up-c">
+										<td rowspan="<?=sizeof($b);?>"><?=$a;?></td>
+										<td rowspan="<?=sizeof($b);?>"><?=$this->cache_sucursales[$this->suc_id];?></td>
+										<td rowspan="<?=sizeof($b);?>"><?=$this->cache_puntos[$this->pun_id];?></td>
+										<?php foreach($b as $i => $v){ ?>
+											<td class="ui-btn-up-c"><?=$this->cache_operatorias[$v['operatoria']];?></td>
+											<td class="ui-btn-up-c" align="right"><?=$v['ventas'];?></td>
+											<td class="ui-btn-up-c" align="right"><?=$v['puntuacion'];?></td>
+										</tr>
+										<?php
+											$total1 += $v['ventas'];
+											$total2 += $v['puntuacion'];
+										?>
+										<?php } ?>
+									<tr class="ui-bar-d">
+										<td colspan="4" align="right"><b>Total</b></td>
+										<td align="right"><?=$total1;?></td>
+										<td align="right"><?=number_format($total2,2);?></td>
+									</tr>
+									<?php
+										$total3 += $total1;
+										$total4 += $total2;
+										$total1 = $total2 = 0;
+									endforeach; ?>
+								<tr class="ui-bar-c">
+									<td colspan="4" align="right"><b>Totales</b></td>
+									<td align="right"><?=$total3;?></td>
+									<td align="right"><?=number_format($total4,2);?></td>
+								</tr>
+							</tbody>
+						</table>
+						<?php else: ?>
+						<p>No hay resultados relacionados.</p>
+						<?php endif; ?>
+				</li>
+			</ul>
+		</div>
+		<?php endif; ?>
+
+</div>
+
+<script type="text/javascript">
+	$.get('<?=$this->baseUrl();?>/json/puntos-venta',function(d){
+		$puntos = d;
+		$('#suc_id').bind('change',function(){
+			var s = '<option value="">[Puntos de Venta]</option>';
+			$($puntos[+$(this).val()]).each(function(i,v){
+				s += '<option value="'+v.idpunto+'">'+v.nombre+'</option>';
+			});
+			$('#pun_id').html(s).val('<?=$this->pun_id;?>').change();
+		}).show().change();
+	},'json');
+
+</script>

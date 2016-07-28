@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Panel de control</title>
+	<meta charset="ISO-8859-1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--	<link href="/web/public/mobile/jquery.mobile-1.1.1.min.css" media="screen" rel="stylesheet" type="text/css" >-->
+	<link href="/web/public/mobile/test.css" media="screen" rel="stylesheet" type="text/css" >
+	<link href="/web/public/mobile/v1.css" media="screen" rel="stylesheet" type="text/css" >
+	<script type="text/javascript" src="/web/public/js/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="/web/public/mobile/jquery.mobile-1.1.1.min.js"></script>
+
+</head>
+<body>
+	<div data-role="page" id="one">
+		<div data-role="header" style="display: none;">
+			<h1 data-mini="true">RG Distribuciones</h1>
+		</div>
+
+		<div data-role="content">
+			<div style="width:300px;margin:0 auto;">
+				<form method="post" action="/web">
+					<ul data-role="listview" data-inset="true">
+						<li data-role="list-divider">Iniciar Sesi&oacute;n</li>
+						<li data-role="fieldcontain">
+							<input type="text" name="username" id="username" value="" placeholder="Usuario" /></li>
+						<li data-role="fieldcontain">
+							<label for="a"></label>
+							<input type="password" name="password" id="password" value="" data-mini="true" placeholder="Contraseña"></li>
+					</ul>
+					<div class="ui-block-b"><button data-icon="arrow-r" data-theme="a" data-mini="true" type="submit">Iniciar</button></div>
+
+				</form>
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<h5>Agente oficial Telefonica Argentina S.A. - Rg centro distribuciones S.A</h5>
+		</div>
+	</div>
+</body>
+</html>

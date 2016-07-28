@@ -1,0 +1,64 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true" data-theme="c">
+			<li data-role="list-divider">Opciones</li>
+			<li data-icon="home"><a href="<?=$this->baseUrl();?>/logistica/pedidos">Listado</a></li>
+			<?php if($this->pedido['ped_status'] == 20):?>
+				<li data-icon="forward"><a href="<?=$this->baseUrl();?>/logistica/pedidos/editar/ped_id/<?=$this->ped_id;?>">Editar</a></li>
+				<?php endif; ?>
+			<?php if($this->pedido['ped_status'] == 20): ?>
+				<li data-icon="exclam"><a href="<?=$this->baseUrl();?>/logistica/pedidos/cambiar-estado/ped_id/<?=$this->ped_id;?>/st/1">Autorizar</a></li>
+				<?php elseif($this->pedido['ped_status'] == 1):?>
+				<li data-icon="exclam"><a href="<?=$this->baseUrl();?>/logistica/pedidos/cambiar-estado/ped_id/<?=$this->ped_id;?>/st/2">Confirmar</a></li>
+				<?php elseif($this->pedido['ped_status'] == 2):?>
+				<li data-icon="exclam"><a href="<?=$this->baseUrl();?>/logistica/pedidos/cambiar-estado/ped_id/<?=$this->ped_id;?>/st/3">Despachar</a></li>
+				<?php elseif($this->pedido['ped_status'] == 3):?>
+				<li data-icon="exclam"><a href="<?=$this->baseUrl();?>/logistica/pedidos/cambiar-estado/ped_id/<?=$this->ped_id;?>/st/4">Finalizar</a></li>
+				<?php endif; ?>
+			<?php if($this->pedido['ped_status'] < 0):?>
+				<li data-theme="e" data-icon="delete"><a href="<?=$this->baseUrl();?>/logistica/pedidos/cambiar-estado/ped_id/<?=$this->ped_id;?>/st/5">Anular</a></li>
+				<?php endif; ?>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Pedido - Estado: <b><?=$this->cache_ped_status[$this->pedido['ped_status']];?></b></li>
+			<li>
+				<?php if(!empty($this->productos)): ?>
+					<table>
+						<thead>
+							<tr class="ui-bar-d" align="center">
+								<th></th>
+								<th width="80">Ref</th>
+								<th>Producto</th>
+								<th width="50">Cantidad</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($this->productos as $i => $v): ?>
+								<tr class="ui-btn-up-c">
+									<?php if($v['pro_tipo'] == 'A'): ?>
+										<td>Art&iacute;culo</td>
+										<td align="right"><?=$v['pro_id'];?></td>
+										<td><?=$v['articulo'];?></td>
+										<?php else: ?>
+										<td>Equipo</td>
+										<td align="right"><?=$this->cache_marcas[$v['idmarca']];?></td>
+										<td><?=$v['articulo'];?></td>
+										<?php endif; ?>
+									<td align="center"><?=$v['cant'];?></td>
+								</tr>
+								<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php else: ?>
+					<p>No se han a&ntilde;adido productos.</p>
+					<?php endif; ?>
+				<br />
+				<br />
+
+			</li>
+		</ul>
+	</div>
+</div>

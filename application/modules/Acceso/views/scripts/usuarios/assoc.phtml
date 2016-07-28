@@ -1,0 +1,66 @@
+<div data-role="content" class="ui-grid-b">
+	<div id="block-a">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Opciones</li>
+			<li data-icon="grid"><a href="<?=$this->baseUrl();?>/acceso/usuarios">Usuarios</a></li>
+			<li data-icon="back"><a href="<?=$this->baseUrl();?>/acceso/usuarios/manage/usu_id/<?=$this->usuario['idusuario'];?>">Volver</a></li>
+		</ul>
+	</div>
+
+	<div id="block-b" class="ui-block-b" data-theme="c">
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Asociar Roles a <b><?=$this->usuario['username'];?></b></li>
+			<li><?php if(empty($this->roles)): ?><p>Este Usuarios ya tiene todos los <a style="text-decoration:underline" title="Roles" href="<?=$this->baseUrl();?>/acceso/roles">roles</a> asignados.</p><?php endif;?>
+
+<div style="float:left;">
+				<form method="post" action="<?=$this->baseUrl();?>/acceso/usuarios/quitar/usu_id/<?=$this->usuario['idusuario'];?>">
+					<table>
+						<thead>
+							<tr class="ui-bar-d">
+								<th width="200">(<?=sizeof($this->resultados);?>) Roles Asignados</th>
+							</tr>
+							<?php if(!empty($this->resultados)): ?>
+								<tr class="ui-bar-c">
+									<th align="left"><input data-role="none" type="checkbox" /> <button type="submit" data-role="none">Remover</button></th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->resultados as $i => $v): ?>
+									<tr class="ui-btn-up-c">
+										<td><label><input data-role="none" type="checkbox" name="rol[]" value="<?=$v['rol_id'];?>" /> <?=$v['rol_nombre'];?></label></td>
+									</tr>
+									<?php endforeach; ?>
+							</tbody>
+							<?php endif; ?>
+					</table>
+				</form>
+				</div>
+
+				<?php if(!empty($this->roles)): ?>
+					<div style="float:left;">
+						<form method="post" action="<?=$this->baseUrl();?>/acceso/usuarios/agregar/usu_id/<?=$this->usuario['idusuario'];?>">
+							<table>
+								<thead>
+									<tr class="ui-bar-d">
+										<th width="200">(<?=sizeof($this->roles);?>) Roles sin Asignar </th>
+									</tr>
+									<tr align="left" class="ui-bar-c">
+										<th><input data-role="none" type="checkbox" /> <button data-icon="icon-add" type="submit" data-role="none">Asociar</button></th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach($this->roles as $i => $v): ?>
+										<tr class="ui-btn-up-c">
+											<td><label><input data-role="none" type="checkbox" name="rol[]" value="<?=$v['rol_id'];?>" /> <?=$v['rol_nombre'];?></label></td>
+										</tr>
+										<?php endforeach; ?>
+								</tbody>
+							</table>
+						</form>
+					</div>
+					<?php endif;?>
+				<div class="clear"></div>
+			</li>
+		</ul>
+	</div>
+</div>
